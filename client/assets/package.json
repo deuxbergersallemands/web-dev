@@ -1,0 +1,19 @@
+{
+  "name": "splitwise-rest",
+  "version": "1.0.0",
+  "description": "Projet - M2 Génie Logiciel - Université de Bordeaux",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3",
+    "md5": "^2.0.0",
+    "mongodb": "^2.0.48",
+    "angular": "^1.2.16",
+    "angular-route": "^1.2.16"
+   }
+}
