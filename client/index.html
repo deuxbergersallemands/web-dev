@@ -1,13 +1,24 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-  	<script src="assets/node_modules/angular/angular.js"> </script>
-  	<script src="assets/node_modules/angular-route/angular-route.js"> </script>
+  	<script src="assets/node_modules/angular/angular.min.js"> </script>
+    <script src="assets/node_modules/angular-route/angular-route.js"> </script>
+    <script src="assets/node_modules/bootstrap/dist/js/bootstrap.min.js"> </script>
+    <script src="assets/node_modules/jquery/dist/jquery.js"> </script>
+
+    <script src="app.js"> </script>
+    <script src="app/directives.js"> </script>
+    <script src="app/routes.js"> </script>
+
+    <link rel="stylesheet" href="assets/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/custom/css/style.css"/>
   </head>
+  
   <body>
-  	<div ng-app="Splitwise">
-  		<div ng-view>
-  		</div>
+    <div ng-app="Splitwise">
+      <div ng-view></div>
     </div>
   </body>
 </html>
+
+
