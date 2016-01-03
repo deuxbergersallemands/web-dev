@@ -3,8 +3,8 @@ myApp.config(function ($routeProvider, $locationProvider) {
 	  .when('/', {
 	  	templateUrl: 'app/composants/reception/reception.html',
 	  })
-	  .when('/accueil', {
-		templateUrl: 'app/composants/accueil/accueil.html',
+	  .when('/tableauDeBord', {
+		templateUrl: 'app/composants/tableauDeBord/tableauDeBord.html',
 	  })
 	  .otherwise({ redirectTo: '/'});
 });
