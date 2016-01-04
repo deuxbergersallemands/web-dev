@@ -1,0 +1,12 @@
+#activiteRecente {
+  padding: 10px;
+  text-align: center;
+  border-radius: 30px;
+  border-width: 1px;
+  border-color: black;
+  border-style: dotted;
+}
+
+#activiteRecenteTable {
+	border-radius: 1px;
+}
