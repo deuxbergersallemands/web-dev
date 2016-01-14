@@ -1,10 +1,10 @@
-myApp.controller('InscriptionControleur', ['$scope', '$location', function($scope, $route, $routeParams, $location) {
+myApp.controller('InscriptionControleur', ['$scope', '$route', '$routeParams', '$location', function($scope, $route, $routeParams, $location) {
   $scope.mel = ""
   $scope.motDePasse = ""
   $scope.confirmerMDP = ""
 
   $scope.seConnecter = function() {
-    // Vérifier cordonées saisis 
+    // Vérifier cordonées saisies 
     $location.path("/tableauDeBord")
   };
 }]);

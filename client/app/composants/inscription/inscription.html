@@ -1,5 +1,5 @@
 <navbar-vide></navbar-vide>
-<div ng-controller="InscriptionControleur" class="container">
+<div ng-controller="InscriptionControleur" ng-submit="seConnecter()" class="container">
       <form class="form-inscription">
         <h2 class="form-inscription-heading">Veuillez fournir les données démandées: </h2>
         <label for="mel" class="sr-only">Mél</label>
@@ -7,6 +7,6 @@
         <label for="motDePasse" class="sr-only">Mot de Passe</label>
         <input type="password" id="motDePasse" class="form-control" placeholder="Mot de passe" required>
         <input type="password" id="confirmerMDP" class="form-control" placeholder="Veuillez confirmer votre mot de passe" required>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">S'inscrire</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit"> S'inscrire</button>
       </form>
 </div> <!-- /container -->

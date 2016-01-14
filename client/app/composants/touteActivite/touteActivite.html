@@ -1,0 +1,17 @@
+<div ng-controller="TouteActiviteControleur" class="col-md-6 tableauDeDette">
+  <table class='table table-bordered table-striped'>
+  <h1>
+    Historique
+  </h1>
+  <tr>
+    <th> Evènement </th>
+    <th> Date </th>
+  </tr>
+
+  <tr ng-repeat="element in historique">
+    <th> {{element.texte}} </th>
+    <th> {{element.date}} </th>
+  </tr>
+  </table>
+</div>
+
