@@ -1,9 +1,6 @@
-conn = new Mongo(
-   );
-db = conn.getDB('deuxbergersallemands_web-dev'
-   );
-db = db.getSiblingDB('deuxbergersallemands_web-dev'
-   );
+conn = new Mongo(   );
+db = conn.getDB('deuxbergersallemands_web-dev');
+db = db.getSiblingDB('deuxbergersallemands_web-dev');
 
 
 db.createCollection( "Utilisateur",
@@ -70,8 +67,7 @@ db.Utilisateur.insert(
    );
 
 
-db.createCollection( "Croupe"
-   );
+db.createCollection( "Croupe");
 //db.accounts.createIndex( { "nom": 1 }, { unique: true }    );
 db.Groupe.insert(
    {
@@ -91,8 +87,7 @@ db.Groupe.insert(
 
 db.createCollection("Historique"
    );
-var dateHistorique = new Date(
-   );
+var dateHistorique = new Date();
 db.Historique.insert({"date":dateHistorique,"texte":"Saber à ajouter netty à l'evenement ski"}
    );
 db.Historique.insert({"date":dateHistorique,"texte":"Saber à ajouter tristan à l'evenement ski"}
@@ -113,8 +108,7 @@ db.createCollection("Transaction",   {
 
 );
 
-var dateCreationTransaction = new Date(
-   );
+var dateCreationTransaction = new Date();
 db.Transaction.insert({
    "UtilisateurCreateur":{"nom":"saber","mail":"frejsaber@yahoo.fr"},
    "Groupe":{"nom":"ski"},
@@ -123,32 +117,31 @@ db.Transaction.insert({
    "MontantTotal":42.60,
    "DateCreation":dateCreationTransaction,
    "participants":[
-      {"participant":{"nom":"tristan","mail":"tristan@gmail.com"},"montantDu":14.6},
-      {"participant":{"nom":"netty","mail":"netty@gmail.com"},"montantDu":14.6},
-      {"participant":{"nom":"seif","mail":"seifeddinefraj@live.fr"},"montantDu":14.6},
-      {"participant":{"nom":"saber","mail":"frejsaber@yahoo.fr"},"montantDu":-42.60}
+      {"participant":{"nom":"tristan","mail":"tristan@gmail.com"},"montantDu":14.6,"montantReglé":0},
+      {"participant":{"nom":"netty","mail":"netty@gmail.com"},"montantDu":14.6,"montantReglé":0},
+      {"participant":{"nom":"seif","mail":"seifeddinefraj@live.fr"},"montantDu":14.6,"montantReglé":0},
+      
+
    ],
    "statut":"Ouverte",
    "DateDeFermeture":null
 }
 );
 
-var dateCreationTransaction = new Date(
-   );
-var dateArrangement = new Date(
-   );
+var dateCreationTransaction = new Date();
+var dateArrangement = new Date();
 db.Transaction.insert({
    "UtilisateurCreateur":{"nom":"tristan","mail":"tristan@gmail.com"},
    "Groupe":{"nom":"ski"},
    "description":"Fondue savoyarde",
    "type":"Equitable",
-   "MontantTotal":96.56,
+   "MontantTotal":100,
    "DateCreation":dateCreationTransaction,
-   "participants":[
-      {"participant":{"nom":"tristan","mail":"tristan@gmail.com"},"montantDu":-96.56},
-      {"participant":{"nom":"netty","mail":"netty@gmail.com"},"montantDu":32.19},
-      {"participant":{"nom":"seif","mail":"seifeddinefraj@live.fr"},"montantDu":32.19},
-      {"participant":{"nom":"saber","mail":"frejsaber@yahoo.fr"},"montantDu":32.19}
+   "participants":
+      {"participant":{"nom":"tristan","mail":"tristan@gmail.com"},"montantDu":25,"montantReglé":25},
+      {"participant":{"nom":"netty","mail":"netty@gmail.com"},"montantDu":25,"montantReglé":0},
+      {"participant":{"nom":"seif","mail":"seifeddinefraj@live.fr"},"montantDu":25,"montantReglé":0},
+      {"participant":{"nom":"saber","mail":"frejsaber@yahoo.fr"},"montantDu":25,"montantReglé":15}
    ],
    "statut":"Arrongée",
    "DateDeFermeture":dateArrangement
