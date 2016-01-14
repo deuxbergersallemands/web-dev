@@ -4,7 +4,7 @@
   "description": "Projet - M2 Génie Logiciel - Université de Bordeaux",
   "main": "app.js",
   "scripts": {
-    "postinstall": "node config/scripts/postinstall.js",
+    "postinstall": "mongo config/scripts/postinstall.js",
     "start": "node app.js"
   },
   "repository": {
