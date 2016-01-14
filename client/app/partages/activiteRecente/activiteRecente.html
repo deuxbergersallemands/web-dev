@@ -1,34 +1,9 @@
-<div id='activiteRecente'>
+<div ng-controller="ActiviteRecenteControleur" id='activiteRecente'>
   <h4> 
     Activités Récentes
-  <h4>
   <table id='activiteRecenteTable' class='table table-condensed table-striped table-bordered'>
-  	<tr>
-  		<td> Toto toto toto </td>
-  	</tr>
-  	<tr>
-  		<td> Toto toto toto </td>
-  	</tr>
-  	<tr>
-  		<td> Toto toto toto </td>
-  	</tr>
-  	<tr>
-  		<td> Toto toto toto </td>
-  	</tr>
-  	<tr>
-  		<td> Toto toto toto </td>
-  	</tr>
-  	<tr>
-  		<td> Toto toto toto </td>
-  	</tr>
-  	<tr>
-  		<td> Toto toto toto </td>
-  	</tr>
-  	<tr>
-  		<td> Toto toto toto </td>
-  	</tr>
-  	<tr>
-  		<td> Toto toto toto </td>
+  	<tr ng-repeat="activite in activitesRecentes">
+  		<td> {{activite.texte}} </td>
   	</tr>
   </table>
 </div>
