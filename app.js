@@ -10,7 +10,7 @@ var express=require("express");
 var bodyParser = require('body-parser')
 var md5 = require("md5")
 
-var url = "mongodb://localhost:27017/test"
+var url = "mongodb://localhost:27017/deuxbergersallemands_web-dev"
 var app = express()
 
 app.use(bodyParser.json()) // Nécessaire pour parser le body des requêtes PUT (Q5)
@@ -26,6 +26,18 @@ MongoClient.connect(url, function(err, db) {
     db.collection("Utilisateur", function(err, Utilisateur) {
     
             app.use(express.static(__dirname+'/client'));
+
+
+            app.get('/tableauDeBord', function(req, res) {
+                Utilisateur.findOne( function(err, project) {
+                    if (err) return next(err)
+                    if (project == null)
+                    res.status(404).end()
+                    else {
+                    res.json(project)
+                    }
+                })
+            })
 
 
             app.post('/', function(req, res, next) {
@@ -52,6 +64,19 @@ MongoClient.connect(url, function(err, db) {
 
 
 /******************************************************/
+/*
+le chemin possible pour le client
+'/'
+'/inscription'
+'/tableauDeBord'
+'/historique'
+'/transaction/nouvelle'
+'/transaction/:id'
+'/relations'
+*/
+
+
+
 
 /*
 
