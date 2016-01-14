@@ -1,4 +1,4 @@
-myApp.controller('InscriptionControlleur', ['$scope', '$location', function($scope, $route, $routeParams, $location) {
+myApp.controller('InscriptionControleur', ['$scope', '$location', function($scope, $route, $routeParams, $location) {
   $scope.mel = ""
   $scope.motDePasse = ""
   $scope.confirmerMDP = ""

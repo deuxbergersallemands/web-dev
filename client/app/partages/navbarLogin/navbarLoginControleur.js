@@ -1,4 +1,4 @@
-myApp.controller('NavbarLoginControlleur', ['$scope', '$location', function($scope, $route, $routeParams, $location) {
+myApp.controller('NavbarLoginControleur', ['$scope', '$location', function($scope, $route, $routeParams, $location) {
   $scope.login = ""
   $scope.motDePasse = ""
 
