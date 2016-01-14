@@ -9,5 +9,8 @@ myApp.config(function ($routeProvider, $locationProvider) {
 	  .when('/tableauDeBord', {
 		templateUrl: 'app/composants/tableauDeBord/tableauDeBord.html',
 	  })
+	  .when('/historique', {
+		templateUrl: 'app/composants/historique/historique.html',
+	  })
 	  .otherwise({ redirectTo: '/'});
 });

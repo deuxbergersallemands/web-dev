@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav ng-controller="NavbarLoginControleur" class="navbar navbar-inverse navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
       <a class="navbar-brand" href="#/">Splitwise</a>
@@ -10,7 +10,7 @@
       <div class="form-group">
         <input type="password" placeholder="Mot de Passe" class="form-control">
       </div>
-      <button type="submit" class="btn btn-success">Se Connecter</button>
+      <button ng-click="envoyerLogin()" class="btn btn-success"> Se Connecter </button>
     </form>
   </div>
 </nav>
