@@ -22,22 +22,19 @@ var getETag = function(body) {
 
 app.set("etag", getETag)
 //world_bank
+//db.Utilisateur.find().forEach(printjson)
 MongoClient.connect(url, function(err, db) {
+
     db.collection("Utilisateur", function(err, Utilisateur) {
+    
             app.use(express.static(__dirname+'/client'));
             app.use("/tableauDeBord",function(){
                 console.log("/tableauDeBord");
             })
 
-        app.get("/projects", function (req, resp, next) { // Question 2
-           
+        
 
-            var cursor = Utillisateur.find().limit(2)
-            cursor.toArray(function(err, data) {
-                if (err) return next(err)
-                resp.json(data)
-            })
-        })
+        
 
 
    
