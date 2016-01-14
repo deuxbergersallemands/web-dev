@@ -35,7 +35,7 @@
   },
   "homepage": "https://github.com/deuxbergersallemands/web-dev#readme",
   "_id": "splitwise-rest@1.0.0",
-  "_shasum": "9c31241fe649f7df3efadb62aca63ae849511d9f",
+  "_shasum": "b6c7af55e2b3357b3ef7d343f80e8a248ef7d38b",
   "_from": "git+https://github.com/deuxbergersallemands/web-dev.git",
-  "_resolved": "git+https://github.com/deuxbergersallemands/web-dev.git#141dd437233b96f558d2d7fb9720737de39dac67"
+  "_resolved": "git+https://github.com/deuxbergersallemands/web-dev.git#0af99c1a8be2a1788525daea5632f66d715029d2"
 }
