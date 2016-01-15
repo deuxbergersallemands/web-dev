@@ -6,7 +6,10 @@ var Db = require('mongodb').Db,
 
 
 var db = new Db('deuxbergersallemands_web-dev', new Server('localhost', 27017));
-var app=require("express")();
+//var app=require("express")();
+var express=require("express");
+var app=express();
+
 
 
 // Establish connection to db
@@ -15,11 +18,13 @@ db.open(
         if(err==null){
             console.log("connexion reussite au serveur base de données réussite  localhost', 27017");
             console.log("demarrage de serveur http l'application localhost:3000 ");
+            app.use(express.static(__dirname+'/client'));
+
+            /*
             app.use(function(req,res){
+                 res.sendFile(__dirname+'/client/index.html');
 
-                res.sendFile(__dirname+'/client/index1.html');
-
-            });
+            });*/
            
 
             app.listen(3000);
