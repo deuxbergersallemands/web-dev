@@ -12,5 +12,8 @@ myApp.config(function ($routeProvider, $locationProvider) {
 	  .when('/historique', {
 		templateUrl: 'app/composants/historique/historique.html',
 	  })
+	  .when('/transaction/:id', {
+		templateUrl: 'app/composants/transaction/id/transaction.html',
+	  })
 	  .otherwise({ redirectTo: '/'});
 });
