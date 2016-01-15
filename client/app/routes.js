@@ -12,5 +12,8 @@ myApp.config(function ($routeProvider, $locationProvider) {
 	  .when('/historique', {
 		templateUrl: 'app/composants/historique/historique.html',
 	  })
+	  .when('/relations', {
+		templateUrl: 'app/composants/relations/relations.html',
+	  })
 	  .otherwise({ redirectTo: '/'});
 });
