@@ -1,9 +1,9 @@
-conn = new Mongo(   );
+conn = new Mongo();
 db = conn.getDB('deuxbergersallemands_web-dev');
 db = db.getSiblingDB('deuxbergersallemands_web-dev');
 
 
-db.createCollection( "Utilisateur",
+db.createCollection("Utilisateur",
    {
       validator: { $or:
          [
@@ -85,8 +85,7 @@ db.Groupe.insert(
 
 
 
-db.createCollection("Historique"
-   );
+db.createCollection("Historique");
 var dateHistorique = new Date();
 db.Historique.insert({"date":dateHistorique,"texte":"Saber à ajouter netty à l'evenement ski"}
    );
@@ -95,7 +94,7 @@ db.Historique.insert({"date":dateHistorique,"texte":"Saber à ajouter tristan à
 db.Historique.insert({"date":dateHistorique,"texte":"Saber à ajouter seif à l'evenement ski"}
    );
 
-db.createCollection("Transaction",   {
+db.createCollection("Transaction",{
       validator: { $or:
          [
             { 
@@ -119,7 +118,7 @@ db.Transaction.insert({
    "participants":[
       {"participant":{"nom":"tristan","mail":"tristan@gmail.com"},"montantDu":14.6,"montantReglé":0},
       {"participant":{"nom":"netty","mail":"netty@gmail.com"},"montantDu":14.6,"montantReglé":0},
-      {"participant":{"nom":"seif","mail":"seifeddinefraj@live.fr"},"montantDu":14.6,"montantReglé":0},
+      {"participant":{"nom":"seif","mail":"seifeddinefraj@live.fr"},"montantDu":14.6,"montantReglé":0}
       
 
    ],
@@ -137,11 +136,27 @@ db.Transaction.insert({
    "type":"Equitable",
    "MontantTotal":100,
    "DateCreation":dateCreationTransaction,
-   "participants":
-      {"participant":{"nom":"tristan","mail":"tristan@gmail.com"},"montantDu":25,"montantReglé":25},
-      {"participant":{"nom":"netty","mail":"netty@gmail.com"},"montantDu":25,"montantReglé":0},
-      {"participant":{"nom":"seif","mail":"seifeddinefraj@live.fr"},"montantDu":25,"montantReglé":0},
-      {"participant":{"nom":"saber","mail":"frejsaber@yahoo.fr"},"montantDu":25,"montantReglé":15}
+   "participants":[
+      {
+         "participant":{"nom":"tristan","mail":"tristan@gmail.com"},
+         "montantDu":25,
+         "montantReglé":25
+      },
+      {
+         "participant":{"nom":"netty","mail":"netty@gmail.com"},
+         "montantDu":25,
+         "montantReglé":0
+      },
+      {
+         "participant":{"nom":"seif","mail":"seifeddinefraj@live.fr"},
+         "montantDu":25,
+         "montantReglé":0
+      },
+      {
+         "participant":{"nom":"saber","mail":"frejsaber@yahoo.fr"},
+         "montantDu":25,
+         "montantReglé":15
+      }
    ],
    "statut":"Arrongée",
    "DateDeFermeture":dateArrangement

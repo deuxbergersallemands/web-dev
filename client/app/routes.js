@@ -22,4 +22,6 @@ myApp.config(function ($routeProvider, $locationProvider) {
 		templateUrl: 'app/composants/relations/relations.html',
 	  })	  
 	  .otherwise({ redirectTo: '/'});
+
+	 $locationProvider.html5Mode(true);
 });
