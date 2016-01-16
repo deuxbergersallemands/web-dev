@@ -7,7 +7,7 @@
   	
   <ng-form name="FormTransac"  class="maTransac">
   	Cette transaction est établie entre:<br/><br/>
-  		Nom : <input name="inputName" ng-model="nomAjouter" placeholder="Veuillez entrer votre nom" required="obligatoire">
+  		Nom : <input name="inputName" ng-model="nomAjouter" placeholder="Saisir votre nom" required="obligatoire">
   		<div ng-repeat="nom in noms" id="nameT" >
   			{{nom}}
   		</div>
@@ -17,10 +17,10 @@
   		<textarea ng-model="description" required="obligatoire"> ... </textarea>
   		<br/><br/>
   		<label for="Montant"> Montant: </label> <br/>
-  		<input type="number" min="0.00" max="9999999999.99" ng-model="Montant" required="obligatoire">  </input>
+  		<input type="number" min="0.00" max="9999999999.99" ng-model="montant" required="obligatoire">  </input>
   		<br/><br/>
   		 Payé par:
-  		<select name="SelectParticipant" >
+  		<select name="SelectParticipantRembourse" ng-model="participantRembourse">
 	      <option ng-repeat="nom in noms">{{nom}}</option>
 	    </select><br/><br/>
   		<br/><br/>

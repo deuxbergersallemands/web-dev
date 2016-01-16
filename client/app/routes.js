@@ -20,6 +20,9 @@ myApp.config(function ($routeProvider, $locationProvider) {
 	  })
 	  .when('/relations', {
 		templateUrl: 'app/composants/relations/relations.html',
+	  })
+	  .when('/amis', {
+		templateUrl: 'app/composants/amis/ajouterAmis.html',
 	  })	  
 	  .otherwise({ redirectTo: '/'});
 
