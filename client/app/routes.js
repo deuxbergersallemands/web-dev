@@ -12,11 +12,14 @@ myApp.config(function ($routeProvider, $locationProvider) {
 	  .when('/historique', {
 		templateUrl: 'app/composants/historique/historique.html',
 	  })
+	  .when('/transaction/nouvelle', {
+		templateUrl: 'app/composants/transaction/nouvelle/transaction.html',
+	  })
 	  .when('/transaction/:id', {
 		templateUrl: 'app/composants/transaction/id/transaction.html',
 	  })
 	  .when('/relations', {
 		templateUrl: 'app/composants/relations/relations.html',
-	  })
+	  })	  
 	  .otherwise({ redirectTo: '/'});
 });
