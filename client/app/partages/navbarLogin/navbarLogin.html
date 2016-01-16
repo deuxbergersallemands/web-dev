@@ -5,10 +5,10 @@
     </div>
     <form class="navbar-form navbar-right">
       <div class="form-group">
-        <input type="text" placeholder="Mél" class="form-control">
+        <input ng-model="mel" type="text" placeholder="Mél" class="form-control">
       </div>
       <div class="form-group">
-        <input type="password" placeholder="Mot de Passe" class="form-control">
+        <input ng-model="motDePasse" type="password" placeholder="Mot de Passe" class="form-control">
       </div>
       <button ng-click="envoyerLogin()" class="btn btn-success"> Se Connecter </button>
     </form>

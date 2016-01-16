@@ -1,4 +1,3 @@
-//console.log("Begin server boot localhost', 27017");
 var connect = require("connect");
 var Db = require('mongodb').Db,
     MongoClient = require('mongodb').MongoClient,
@@ -6,10 +5,55 @@ var Db = require('mongodb').Db,
 
 
 var db = new Db('deuxbergersallemands_web-dev', new Server('localhost', 27017));
-//var app=require("express")();
 var express=require("express");
-var app=express();
+/****************************************************/
+var bodyParser = require('body-parser')
+var md5 = require("md5")
 
+var url = "mongodb://localhost:27017/test"
+var app = express()
+
+app.use(bodyParser.json()) // Nécessaire pour parser le body des requêtes PUT (Q5)
+
+var getETag = function(body) {
+    return md5(body)
+}
+
+app.set("etag", getETag)
+
+MongoClient.connect(url, function(err, db) {
+
+    db.collection("Utilisateur", function(err, Utilisateur) {
+    
+            app.use(express.static(__dirname+'/client'));
+
+
+            app.post('/', function(req, res, next) {
+                console.log(req.body);
+                res.send()
+                next()
+            });   
+
+            app.use(express.static(__dirname+'/client'));   
+
+        
+
+        
+
+
+   
+
+        app.listen(3000, function() {
+            console.log("Server running...")
+        })
+    })
+})
+
+
+
+/******************************************************/
+
+/*
 
 
 // Establish connection to db
@@ -18,14 +62,28 @@ db.open(
         if(err==null){
             console.log("connexion reussite au serveur base de données réussite  localhost', 27017");
             console.log("demarrage de serveur http l'application localhost:3000 ");
+<<<<<<< Updated upstream
             app.use(express.static(__dirname+'/client'));
+            app.use("/tableauDeBord",function(){
+                console.log("/tableauDeBord");
+//                var cursor =db.Utilisateur.find().
 
-            /*
-            app.use(function(req,res){
-                 res.sendFile(__dirname+'/client/index.html');
+            })
 
-            });*/
            
+=======
+
+            app.use(bodyParser.json())
+
+            app.post('/', function(req, res, next) {
+                console.log(req.body);
+                res.send()
+                next()
+            });   
+
+            app.use(express.static(__dirname+'/client'));           
+
+>>>>>>> Stashed changes
 
             app.listen(3000);
             console.log(" serveur http lancé sur le port 3000");
@@ -35,3 +93,4 @@ db.open(
         
 }
 );
+*/
