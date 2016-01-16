@@ -1,4 +1,3 @@
-//console.log("Begin server boot localhost', 27017");
 var connect = require("connect");
 var Db = require('mongodb').Db,
     MongoClient = require('mongodb').MongoClient,
@@ -21,16 +20,21 @@ var getETag = function(body) {
 }
 
 app.set("etag", getETag)
-//world_bank
-//db.Utilisateur.find().forEach(printjson)
+
 MongoClient.connect(url, function(err, db) {
 
     db.collection("Utilisateur", function(err, Utilisateur) {
     
             app.use(express.static(__dirname+'/client'));
-            app.use("/tableauDeBord",function(){
-                console.log("/tableauDeBord");
-            })
+
+
+            app.post('/', function(req, res, next) {
+                console.log(req.body);
+                res.send()
+                next()
+            });   
+
+            app.use(express.static(__dirname+'/client'));   
 
         
 
@@ -58,6 +62,7 @@ db.open(
         if(err==null){
             console.log("connexion reussite au serveur base de données réussite  localhost', 27017");
             console.log("demarrage de serveur http l'application localhost:3000 ");
+<<<<<<< Updated upstream
             app.use(express.static(__dirname+'/client'));
             app.use("/tableauDeBord",function(){
                 console.log("/tableauDeBord");
@@ -66,6 +71,19 @@ db.open(
             })
 
            
+=======
+
+            app.use(bodyParser.json())
+
+            app.post('/', function(req, res, next) {
+                console.log(req.body);
+                res.send()
+                next()
+            });   
+
+            app.use(express.static(__dirname+'/client'));           
+
+>>>>>>> Stashed changes
 
             app.listen(3000);
             console.log(" serveur http lancé sur le port 3000");

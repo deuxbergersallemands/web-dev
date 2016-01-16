@@ -1,9 +1,16 @@
-myApp.controller('NavbarLoginControleur', ['$scope', '$route', '$routeParams', '$location', function($scope, $route, $routeParams, $location) {
+myApp.controller('NavbarLoginControleur', ['$scope', '$route', '$routeParams', '$location', 'Utilisateur', function($scope, $route, $routeParams, $location, Utilisateur) {
   $scope.motDePasse = ""
   $scope.mel = ""
 
-  $scope.envoyerLogin = function() {
+   var user = new Utilisateur(); 
+   //$scope.testtt = user.$query();
+
+   $scope.envoyerLogin = function() {
     // Vérifier cordonées saisis 
-    $location.path("/tableauDeBord")
+    
+    user.test = {"mdp": $scope.motDePasse, "mel": $scope.mel};
+    user.$save();
+
+    //$location.path("/tableauDeBord")
   };
 }]);
