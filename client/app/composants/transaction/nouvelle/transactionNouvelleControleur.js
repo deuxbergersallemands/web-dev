@@ -1,4 +1,4 @@
-myApp.controller('TransactionNouvelleControleur', ['$scope', '$route', '$routeParams', '$location', 'TransactionNouvelle', function($scope, $route, $routeParams, $location, TransactionNouvelle) {
+myApp.controller('TransactionNouvelleControleur', ['$scope', '$route', '$routeParams', '$location', '$cookies','TransactionNouvelle', function($scope, $route, $routeParams, $location, $cookies, TransactionNouvelle) {
 
   $scope.historique = [{texte:'Transaction1', date:'la date'}, {texte:'Transaction1', date:'la date'}];
   
@@ -17,7 +17,7 @@ myApp.controller('TransactionNouvelleControleur', ['$scope', '$route', '$routePa
     $scope.tousParticipants.push($scope.nomAjouter);
 
   	$scope.transaction = new TransactionNouvelle();
-    $scope.createur = ""; // À remplir
+    $scope.createur = $cookies.get('utilisateur');
     $scope.transaction.participants = $scope.tousParticipants;
     $scope.transaction.description = $scope.description;
     $scope.transaction.montant = $scope.montant;

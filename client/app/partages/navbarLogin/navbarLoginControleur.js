@@ -1,4 +1,4 @@
-myApp.controller('NavbarLoginControleur', ['$scope', '$route', '$routeParams', '$location', 'Utilisateur', function($scope, $route, $routeParams, $location, Utilisateur) {
+myApp.controller('NavbarLoginControleur', ['$scope', '$route', '$routeParams', '$location', '$cookies', 'Utilisateur', function($scope, $route, $routeParams, $location, $cookies, Utilisateur) {
   $scope.motDePasse = ""
   $scope.mel = ""
 
@@ -7,10 +7,13 @@ myApp.controller('NavbarLoginControleur', ['$scope', '$route', '$routeParams', '
    $scope.envoyerLogin = function() {
     // Vérifier cordonées saisis 
     if ($scope.motDePasse.length && $scope.mel.length) {
-      user.test = {"mdp": $scope.motDePasse, "mel": $scope.mel};
+      user.motDePasse =  $scope.motDePasse; 
+      user.mel = $scope.mel;
       user.$save(function (user, headers) {
-                    // succès
-                }, function (error) {
+                   $cookies.put('utilisateur', $scope.mel);
+                   console.log($cookies.get('utilisateur'));
+                   $location.path("/tableauDeBord");
+              }, function (error) {
                     // échec
                 }); 
     }
