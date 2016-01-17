@@ -1,4 +1,4 @@
-myApp.controller('TransactionNouvelleControleur', ['$scope', '$route', '$routeParams', '$location', function($scope, $route, $routeParams, $location) {
+myApp.controller('TransactionNouvelleControleur', ['$scope', '$route', '$routeParams', '$location', 'TransactionNouvelle', function($scope, $route, $routeParams, $location, TransactionNouvelle) {
 
   $scope.historique = [{texte:'Transaction1', date:'la date'}, {texte:'Transaction1', date:'la date'}];
   
@@ -11,8 +11,26 @@ myApp.controller('TransactionNouvelleControleur', ['$scope', '$route', '$routePa
   	$scope.nomAjouter = "";
   }
 
-  $scope.sauvegarder =function() {
-  	console.log("sauvegarder");
+  $scope.sauvegarder = function() {
+
+    $scope.tousParticipants = $scope.noms;
+    $scope.tousParticipants.push($scope.nomAjouter);
+
+  	$scope.transaction = new TransactionNouvelle();
+    $scope.createur = ""; // À remplir
+    $scope.transaction.participants = $scope.tousParticipants;
+    $scope.transaction.description = $scope.description;
+    $scope.transaction.montant = $scope.montant;
+    $scope.transaction.type = $scope.typeTransaction;
+    $scope.transaction.participantRembourse = $scope.participantRembourse;
+    
+    $scope.transaction.$save(function (transaction, headers) {
+                    // succès
+                }, function (error) {
+                    // échec
+                });
   }
+
+
 
 }]);

@@ -55,6 +55,17 @@ MongoClient.connect(url, function(err, db) {
                 next()
             });   
 
+            app.post('/transaction/nouvelle', function(req, res, next) {
+                if (true) { // si le nom d'utilisateur / mdp sont bons
+                  res.send();
+                }
+                else {  // envoyer erreur
+                  res.status(500).send({ error: "On n'a pas pu enregistrer votre transaction." });
+                }
+                next()
+            });   
+
+
             app.use(express.static(__dirname+'/client'));   
 
         

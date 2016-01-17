@@ -67,7 +67,7 @@ db.Utilisateur.insert(
    );
 
 
-db.createCollection( "Croupe");
+db.createCollection( "Groupe");
 //db.accounts.createIndex( { "nom": 1 }, { unique: true }    );
 db.Groupe.insert(
    {
