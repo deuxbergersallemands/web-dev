@@ -3,10 +3,12 @@
       <form class="form-inscription">
         <h2 class="form-inscription-heading">Veuillez fournir les données démandées: </h2>
         <label for="mel" class="sr-only">Mél</label>
-        <input type="email" id="mel" class="form-control" placeholder="Mél" required autofocus>
+        <input type="email" id="mel" ng-model="mel" class="form-control" placeholder="Mél" required autofocus>
         <label for="motDePasse" class="sr-only">Mot de Passe</label>
-        <input type="password" id="motDePasse" class="form-control" placeholder="Mot de passe" required>
-        <input type="password" id="confirmerMDP" class="form-control" placeholder="Veuillez confirmer votre mot de passe" required>
+        <input id="nomComplet" ng-model="nom" class="form-control" placeholder="Nom Complet" required>
+        <label for="nomComplet" class="sr-only">Nom Complet</label>
+        <input type="password" id="motDePasse" ng-model="motDePasse" class="form-control" placeholder="Mot de passe" required>
+        <input type="password" id="confirmerMDP" ng-model="confirmerMDP" class="form-control" placeholder="Veuillez confirmer votre mot de passe" required>
         <button class="btn btn-lg btn-primary btn-block" type="submit"> S'inscrire</button>
       </form>
 </div> <!-- /container -->

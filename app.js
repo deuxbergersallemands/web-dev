@@ -45,15 +45,23 @@ MongoClient.connect(url, function(err, db) {
             })
 
 
-            app.post('/', function(req, res, next) {
+            app.post('/', function(req, res) {
                 if (true) { // si le nom d'utilisateur / mdp sont bons
                   res.send();
                 }
                 else {  // envoyer erreur
                   res.status(500).send({ error: "Les cordonées que vous avez fournisses ne sont pas valides." });
                 }
-                next()
             });   
+
+            app.post('/inscription', function(req, res) {
+                if (true) { // si le mel n'est pas déjà dans la bdd
+                  res.send();
+                }
+                else {  // envoyer erreur
+                  res.status(500).send({ error: "Cet mél existe déjà dans notre système. Est-ce que vous avez déjà un compte? " });
+                }
+            });  
 
             app.post('/transaction/nouvelle', function(req, res, next) {
                 if (true) { // si le nom d'utilisateur / mdp sont bons
