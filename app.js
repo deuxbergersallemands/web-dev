@@ -27,6 +27,11 @@ MongoClient.connect(url, function(err, db) {
     
             app.use(express.static(__dirname+'/client'));
 
+            app.get('/', function(req, res) {
+                var cursor = db.Utilisateur.findOne();
+                res.json({"foo": "bar"});
+            });   
+
 
             app.get('/tableauDeBord', function(req, res) {
                 Utilisateur.findOne( function(err, project) {
@@ -41,8 +46,12 @@ MongoClient.connect(url, function(err, db) {
 
 
             app.post('/', function(req, res, next) {
-                console.log(req.body);
-                res.send()
+                if (true) { // si le nom d'utilisateur / mdp sont bons
+                  res.send();
+                }
+                else {  // envoyer erreur
+                  res.status(500).send({ error: "Les cordonées que vous avez fournisses ne sont pas valides." });
+                }
                 next()
             });   
 

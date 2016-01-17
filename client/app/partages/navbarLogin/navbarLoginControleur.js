@@ -3,14 +3,17 @@ myApp.controller('NavbarLoginControleur', ['$scope', '$route', '$routeParams', '
   $scope.mel = ""
 
    var user = new Utilisateur(); 
-   //$scope.testtt = user.$query();
 
    $scope.envoyerLogin = function() {
     // Vérifier cordonées saisis 
-    
-    user.test = {"mdp": $scope.motDePasse, "mel": $scope.mel};
-    user.$save();
+    if ($scope.motDePasse.length && $scope.mel.length) {
+      user.test = {"mdp": $scope.motDePasse, "mel": $scope.mel};
+      user.$save(function (user, headers) {
+                    // succès
+                }, function (error) {
+                    // échec
+                }); 
+    }
 
-    //$location.path("/tableauDeBord")
   };
 }]);
