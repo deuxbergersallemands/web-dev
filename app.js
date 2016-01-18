@@ -44,6 +44,16 @@ MongoClient.connect(url, function(err, db) {
                 })
             });
 
+            app.get('/amis', function(req, res) {
+             
+                Utilisateur.find({}, {_id:0, amis:1}).toArray(function(err, amis) {
+                    if (err) return next(err);
+                  
+                    res.send(amis);
+                });
+            });
+
+
             app.post('/', function(req, res) {
                 var melReq=req.body.mel;
                 var MotDePasseReq=req.body.motDePasse;
@@ -113,14 +123,10 @@ MongoClient.connect(url, function(err, db) {
 
 
 
-            app.use(express.static(__dirname+'/client'));   
-
-        
-
-        
-
-
-   
+//            app.use(express.static(__dirname+'/client'));   
+ 
+     
+  
 
         app.listen(3000, function() {
             console.log("Server running...")
@@ -128,61 +134,3 @@ MongoClient.connect(url, function(err, db) {
     })
 })
 
-
-
-/******************************************************/
-/*
-le chemin possible pour le client
-'/'
-'/inscription'
-'/tableauDeBord'
-'/historique'
-'/transaction/nouvelle'
-'/transaction/:id'
-'/relations'
-*/
-
-
-
-
-/*
-
-
-// Establish connection to db
-db.open(
-    function(err, db) {
-        if(err==null){
-            console.log("connexion reussite au serveur base de données réussite  localhost', 27017");
-            console.log("demarrage de serveur http l'application localhost:3000 ");
-<<<<<<< Updated upstream
-            app.use(express.static(__dirname+'/client'));
-            app.use("/tableauDeBord",function(){
-                console.log("/tableauDeBord");
-//                var cursor =db.Utilisateur.find().
-
-            })
-
-           
-=======
-
-            app.use(bodyParser.json())
-
-            app.post('/', function(req, res, next) {
-                console.log(req.body);
-                res.send()
-                next()
-            });   
-
-            app.use(express.static(__dirname+'/client'));           
-
->>>>>>> Stashed changes
-
-            app.listen(3000);
-            console.log(" serveur http lancé sur le port 3000");
-        }
-        else
-            console.log("probleme de connexion au serveur Mongod ...")
-        
-}
-);
-*/

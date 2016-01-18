@@ -1,7 +1,15 @@
-<div ng-controller="AjouterAmisControleur" class="col-md-6 tableauDeDette">
+<div ng-controller="AjouterAmisControleur" class="col-md-6 AjouterAMis">
   <table class='table table-bordered table-striped'>
 
     <h2>Ajouter un Ami</h2>
+
+    <div  class="col-md-6" >
+    	Nom : <input name="inputAmi" ng-model="nomAmi" placeholder="Saisir nouvel ami" required="obligatoire">
+	    <div ng-repeat="n in noms | filter: nomAmi" id="nameT" >
+	  			{{nom}} {{n.prenom}}
+	  	</div>
+	  	<button class="btn btn-primary btn-block" ng-click="ajouterAmi"> + Ami(s) </button>
+	</div>
 
   </table>
 </div>
