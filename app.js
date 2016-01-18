@@ -48,17 +48,17 @@ MongoClient.connect(url, function(err, db) {
                 var result=false;
                     console.log("Begin request ###############################################################");
                     console.log(req.body);
-                    var mailReq=req.body.mel;
+                    var melReq=req.body.mel;
                     var MotDePasseReq=req.body.motDePasse;
                     console.log("End request **************************************************************");
-                    var u=Utilisateur.findOne({"mail":mailReq}, function(err, u) {
+                    var u=Utilisateur.findOne({"mel":melReq}, function(err, u) {
                     if (err) return next(err)
                     if (u == null)
                     console.log("utilisateur non trouvable");
                     else {
                     console.log(u);
-                    if((u.mail==mailReq)&&(u.MotDePasse==MotDePasseReq)){
-                        console.log(u.mail,mailReq,u.MotDePasse,MotDePasseReq);
+                    if((u.mel==melReq)&&(u.MotDePasse==MotDePasseReq)){
+                        console.log(u.mel,melReq,u.MotDePasse,MotDePasseReq);
                         result=true;
                         res.send();
                     }
@@ -73,9 +73,9 @@ MongoClient.connect(url, function(err, db) {
                 var result=false;
                     console.log("Begin request ###############################################################");
                     console.log(req.body);
-                    var mailReq=req.body.mel;
+                    var melReq=req.body.mel;
                     console.log("End request **************************************************************");
-                    var u=Utilisateur.findOne({"mail":mailReq}, function(err, u) {
+                    var u=Utilisateur.findOne({"mel":melReq}, function(err, u) {
                     if (err) return next(err)
                     if (u =! null){
                         console.log("utilisateur existe déja ");
