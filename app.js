@@ -44,23 +44,43 @@ MongoClient.connect(url, function(err, db) {
                 })
             })
 
-
             app.post('/', function(req, res) {
-                if (true) { // si le nom d'utilisateur / mdp sont bons
-                  res.send();
-                }
-                else {  // envoyer erreur
-                  res.status(500).send({ error: "Les cordonées que vous avez fournisses ne sont pas valides." });
-                }
+                var result=false;
+                    console.log("Begin request ###############################################################");
+                    console.log(req.body);
+                    var mailReq=req.body.mel;
+                    var MotDePasseReq=req.body.motDePasse;
+                    console.log("End request **************************************************************");
+                    var u=Utilisateur.findOne({"mail":mailReq}, function(err, u) {
+                    if (err) return next(err)
+                    if (u == null)
+                    console.log("utilisateur non trouvable");
+                    else {
+                    console.log(u);
+                    if((u.mail==mailReq)&&(u.MotDePasse==MotDePasseReq)){
+                        console.log(u.mail,mailReq,u.MotDePasse,MotDePasseReq);
+                        result=true;
+                        res.send();
+                    }
+                    else{
+                        res.status(500).send({ error: "Les cordonées que vous avez fournisses ne sont pas valides." });
+                    }
+
+                    }
+                });
             });   
 
             app.post('/inscription', function(req, res) {
-                if (true) { // si le mel n'est pas déjà dans la bdd
-                  res.send();
-                }
-                else {  // envoyer erreur
-                  res.status(500).send({ error: "Cet mél existe déjà dans notre système. Est-ce que vous avez déjà un compte? " });
-                }
+                    console.log(req.body);
+                    var mailReq=req.body.mel;
+                    var u=Utilisateur.findOne({"mail":mailReq}, function(err, u) {
+                    if (err) return next(err)
+                    if (u == null){// si le mel n'est pas déjà dans la bdd
+                    console.log("utilisateur non trouvable");
+                    res.send();
+                    }
+                    else {// envoyer erreur
+                        res.status(500).send({ error: "Les cordonées que vous avez fournisses ne sont pas valides." });
             });  
 
             app.post('/transaction/nouvelle', function(req, res, next) {
