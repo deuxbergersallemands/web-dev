@@ -2,7 +2,7 @@ var connect = require("connect");
 var Db = require('mongodb').Db,
     MongoClient = require('mongodb').MongoClient,
     Server = require('mongodb').Server;
-
+var cookieParser = require('cookie-parser')
 
 var db = new Db('deuxbergersallemands_web-dev', new Server('localhost', 27017));
 var express=require("express");
@@ -14,6 +14,7 @@ var url = "mongodb://localhost:27017/deuxbergersallemands_web-dev"
 var app = express()
 
 app.use(bodyParser.json()) // Nécessaire pour parser le body des requêtes PUT (Q5)
+app.use(cookieParser())
 
 var getETag = function(body) {
     return md5(body)
@@ -81,7 +82,7 @@ MongoClient.connect(url, function(err, db) {
     db.collection("Transaction", function(err, Transaction) {
 
             app.get('/tableauDeBord', function(req, res) {
-                var users=Transaction.find({'UtilisateurCreateur.mel' : req.cookies.utilisateur}).toArray( function(err, users) {
+                var users=Transaction.find({'preteur.mel' : req.cookies.utilisateur}).toArray( function(err, users) {
                     if (err) return next(err)
                     if (users == null)
                       res.status(404).end()
