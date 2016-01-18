@@ -17,9 +17,12 @@ myApp.controller('AjouterAmisControleur', ['$scope', '$route', '$routeParams', '
  
   $scope.recupererAmis();
 
+    $scope.noms = $scope.recupererAmis();
+
+ 
   $scope.nomAmi = "";
   $scope.ajouterAmi = function() {
-  	$scope.noms.push($scope.nomAmi);
-  	$scope.nomAmi = "";
+  //	$scope.noms.push($scope.nomAmi);
+  //	$scope.nomAmi = "";
   }
 }]);
