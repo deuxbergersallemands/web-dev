@@ -5,19 +5,18 @@ myApp.controller('TransactionNouvelleControleur', ['$scope', '$route', '$routePa
   $scope.noms = [];
 
   $scope.nomAjouter = "";
-
   $scope.ajouterNom = function() {
   	$scope.noms.push($scope.nomAjouter);
   	$scope.nomAjouter = "";
   }
 
   $scope.sauvegarder = function() {
-
+   
     $scope.tousParticipants = $scope.noms;
     $scope.tousParticipants.push($scope.nomAjouter);
 
   	$scope.transaction = new TransactionNouvelle();
-    $scope.createur = $cookies.get('utilisateur');
+    $scope.transaction.createur = $cookies.get('utilisateur');
     $scope.transaction.participants = $scope.tousParticipants;
     $scope.transaction.description = $scope.description;
     $scope.transaction.montant = $scope.montant;

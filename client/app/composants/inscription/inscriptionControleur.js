@@ -6,7 +6,7 @@ myApp.controller('InscriptionControleur', ['$scope', '$route', '$routeParams', '
 
   $scope.seConnecter = function() {
     // Vérifier cordonées saisies 
-      console.log("ll");
+
     	if ($scope.mel.length && $scope.motDePasse.length && $scope.motDePasse.length && $scope.nom.length) {
           
           $scope.inscription = new Inscription();
