@@ -29,17 +29,16 @@ MongoClient.connect(url, function(err, db) {
                 var cursor = db.Utilisateur.findOne();
                 res.json({"foo": "bar"});
             });   
-            app.get('/tableauDeBord', function(req, res) {
-                console.log("req.body :",req.body);
-                var users=Utilisateur.find({}).toArray( function(err, users) {
-                    if (err) return next(err)
-                    if (users == null)
-                      res.status(404).end()
-                    else{
-                      res.send(users);
-                    }
-                })
+
+            app.get('/amis', function(req, res) {
+             
+                Utilisateur.find({}, {_id:0, amis:1}).toArray(function(err, amis) {
+                    if (err) return next(err);
+                  
+                    res.send(amis);
+                });
             });
+
             app.post('/', function(req, res) {
                 var melReq=req.body.mel;
                 var MotDePasseReq=req.body.motDePasse;
@@ -76,51 +75,39 @@ MongoClient.connect(url, function(err, db) {
                     res.status(500).send({ error: "utilisateur existe déja" });
                      }
                 });
-            });    
-            /*  
-            app.post('/transaction/nouvelle', function(req, res) {
-                 console.log(req.body);
-            });*/
-           
-      })
-
-
+            });  
+     })
+ 
     db.collection("Transaction", function(err, Transaction) {
 
-     
-            app.post('/transaction/nouvelle', function(req, res) { 
-                var dateCreationTransaction= new Date();              
-                //console.log(req.body);
-                var TransactionAAjouter=({
-                    "UtilisateurCreateur":{"nom":"saber","mel":"frejsaber@yahoo.fr"},
-                    "Groupe":{"nom":"ski"},
-                    "description":"Assiettes Savoyardes",
-                    "type":"Equitable",
-                    "MontantTotal":42.60,
-                    "DateCreation":dateCreationTransaction,
-                    "participants":[
-                      {"participant":{"nom":"tristan","mel":"tristan@gmail.com"},"montantDu":14.6,"montantReglé":0},
-                      {"participant":{"nom":"netty","mel":"netty@gmail.com"},"montantDu":14.6,"montantReglé":0},
-                      {"participant":{"nom":"seif","mel":"seifeddinefraj@live.fr"},"montantDu":14.6,"montantReglé":0}
-                    ],
-                    "statut":"Ouverte",
-                    "DateDeFermeture":null
-                    });
-                console.log("a inseree",TransactionAAjouter);
-
-                Transaction.insert(req.body);
-                var objetInsere=Transaction.findOne();
-                console.log("inseree",objetInsere);
-                //(TransactionAAjouter);
-                res.send();
- 
+            app.get('/tableauDeBord', function(req, res) {
+                var users=Transaction.find({'UtilisateurCreateur.mel' : req.cookies.utilisateur}).toArray( function(err, users) {
+                    if (err) return next(err)
+                    if (users == null)
+                      res.status(404).end()
+                    else{
+                      res.send(users);
+                    }
+                })
             });
-            
-        })
-          
-     app.use(express.static(__dirname+'/client'));   
-     app.listen(3000, function() {
-     console.log("Server running...")
-    
+
+
+            app.post('/transaction/nouvelle', function(req, res, next) {
+                if (true) { // si le nom d'utilisateur / mdp sont bons
+
+                  res.send();
+                }
+                else {  // envoyer erreur
+                  res.status(500).send({ error: "On n'a pas pu enregistrer votre transaction." });
+                }
+                next()
+            }); 
+    });
+
+    app.listen(3000, function() {
+      console.log("Server running...")
     })
+
+
+
 })
