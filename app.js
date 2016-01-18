@@ -69,27 +69,38 @@ MongoClient.connect(url, function(err, db) {
                     }
                 });
             });
+
             app.post('/inscription', function(req, res) {
                 var result=false;
-                    console.log("Begin request ###############################################################");
+                    console.log("/inscription-->req.body ###############################################################");
                     console.log(req.body);
+
                     var melReq=req.body.mel;
-                    console.log("End request **************************************************************");
-                    var u=Utilisateur.findOne({"mel":melReq}, function(err, u) {
+                    var NouveauUtilisateur= Utilisateur.findOne({"mel":melReq}, function(err, u) {
                     if (err) return next(err)
-                    if (u =! null){
-                        console.log("utilisateur existe déja ");
-                        console.log(u);
-                         res.status(500).send({ error: "utilisateur existe déja" });
-                    }
-                    else{
+                   // if (u.mel ==req.body.mel){
+                    if (u==null){
+                        console.log("il n'existe pas un utilisateur avec le mel specifié :",u);
+                        //ajouter NouveauUtilisateur à la collection Utilisateur
+                        UtilisateurAAjouter=req.body;
+                        console.log("à ajouter ",UtilisateurAAjouter);
+                        Utilisateur.insert(UtilisateurAAjouter);
+//                        db.inventory.insert(NouveauUtilisateur);
+
                          res.send();
                        // res.status(500).send({ error: "Les cordonées que vous avez fournisses ne sont pas valides." });
-                    }
+
+                                         }
+                    else{
+                           console.log("utilisateur existe déja :",u);
+                       // console.log(u);
+                         res.status(500).send({ error: "utilisateur existe déja" });
+                     }
 
                    
                 });
-            });   
+            });  
+
 
            
 
