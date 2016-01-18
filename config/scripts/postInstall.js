@@ -94,7 +94,8 @@ db.Historique.insert({"date":dateHistorique,"texte":"Saber à ajouter tristan à
 db.Historique.insert({"date":dateHistorique,"texte":"Saber à ajouter seif à l'evenement ski"}
    );
 
-db.createCollection("Transaction",{
+db.createCollection("Transaction"
+   /*,{
       validator: { $or:
          [
             { 
@@ -103,7 +104,7 @@ db.createCollection("Transaction",{
             }
          ]
       }
-   }
+   }*/
 
 );
 
@@ -119,11 +120,10 @@ db.Transaction.insert({
       {"participant":{"nom":"tristan","mel":"tristan@gmail.com"},"montantDu":14.6,"montantReglé":0},
       {"participant":{"nom":"netty","mel":"netty@gmail.com"},"montantDu":14.6,"montantReglé":0},
       {"participant":{"nom":"seif","mel":"seifeddinefraj@live.fr"},"montantDu":14.6,"montantReglé":0}
-      
-
    ],
    "statut":"Ouverte",
-   "DateDeFermeture":null
+   "DateDeFermeture":null,
+   "preteur":{"nom":"netty","mel":"netty@gmail.com"}
 }
 );
 
@@ -159,7 +159,9 @@ db.Transaction.insert({
       }
    ],
    "statut":"Arrongée",
-   "DateDeFermeture":dateArrangement
+   "DateDeFermeture":dateArrangement,
+   "preteur":{"nom":"netty","mel":"netty@gmail.com"}
+   
 }
 );
 
