@@ -32,41 +32,26 @@ MongoClient.connect(url, function(err, db) {
                 res.json({"foo": "bar"});
             });   
 
-
             app.get('/tableauDeBord', function(req, res) {
-                console.log(req.body);
-                var users=Utilisateur.find( function(err, project) {
+                console.log("req.body :",req.body);
+                var users=Utilisateur.find({}).toArray( function(err, users) {
                     if (err) return next(err)
-                    if (project == null)
-                    res.status(404).end()
+                    if (users == null)
+                      res.status(404).end()
+                    else{
+                      res.send(users);
+                    }
                 })
-                console.log("users sont  :",users);
-                res.users=users;
-                console.log("la reponse est :",res.users);
-                //res.json(project)
-
-                //res.send();  
-            })
-           app.get('/tableauDeBord/',function(req,res){
-                var users =Utilisateur.find();
-                res=users;
-                res.send();
-
-
-            });  
+            });
 
             app.post('/', function(req, res) {
-                var result=false;
-                    console.log("Begin request ###############################################################");
-                    console.log(req.body);
-                    var melReq=req.body.mel;
-                    var MotDePasseReq=req.body.motDePasse;
-                    console.log("End request **************************************************************");
-                    var u=Utilisateur.findOne({"mel":melReq}, function(err, u) {
-                    if (err) return next(err)
-                    if (u == null)
+                var melReq=req.body.mel;
+                var MotDePasseReq=req.body.motDePasse;
+                var u=Utilisateur.findOne({"mel":melReq}, function(err, u) {
+                if (err) return next(err)
+                if (u == null)
                     console.log("utilisateur non trouvable");
-                    else {
+                else {
                     console.log(u);
                     if((u.mel==melReq)&&(u.MotDePasse==MotDePasseReq)){
                         console.log(u.mel,melReq,u.MotDePasse,MotDePasseReq);
@@ -77,7 +62,7 @@ MongoClient.connect(url, function(err, db) {
                         res.status(500).send({ error: "Les cordonées que vous avez fournisses ne sont pas valides." });
                     }
 
-                    }
+                }
                 });
             });
 
