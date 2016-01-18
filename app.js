@@ -68,20 +68,30 @@ MongoClient.connect(url, function(err, db) {
 
                     }
                 });
-            });   
-
+            });
             app.post('/inscription', function(req, res) {
+                var result=false;
+                    console.log("Begin request ###############################################################");
                     console.log(req.body);
                     var mailReq=req.body.mel;
+                    console.log("End request **************************************************************");
                     var u=Utilisateur.findOne({"mail":mailReq}, function(err, u) {
                     if (err) return next(err)
-                    if (u == null){// si le mel n'est pas déjà dans la bdd
-                    console.log("utilisateur non trouvable");
-                    res.send();
+                    if (u =! null){
+                        console.log("utilisateur existe déja ");
+                        console.log(u);
+                         res.status(500).send({ error: "utilisateur existe déja" });
                     }
-                    else {// envoyer erreur
-                        res.status(500).send({ error: "Les cordonées que vous avez fournisses ne sont pas valides." });
-            });  
+                    else{
+                         res.send();
+                       // res.status(500).send({ error: "Les cordonées que vous avez fournisses ne sont pas valides." });
+                    }
+
+                   
+                });
+            });   
+
+           
 
             app.post('/transaction/nouvelle', function(req, res, next) {
                 if (true) { // si le nom d'utilisateur / mdp sont bons
