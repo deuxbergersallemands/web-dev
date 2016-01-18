@@ -34,15 +34,26 @@ MongoClient.connect(url, function(err, db) {
 
 
             app.get('/tableauDeBord', function(req, res) {
-                Utilisateur.findOne( function(err, project) {
+                console.log(req.body);
+                var users=Utilisateur.find( function(err, project) {
                     if (err) return next(err)
                     if (project == null)
                     res.status(404).end()
-                    else {
-                    res.json(project)
-                    }
                 })
+                console.log("users sont  :",users);
+                res.users=users;
+                console.log("la reponse est :",res.users);
+                //res.json(project)
+
+                //res.send();  
             })
+           app.get('/tableauDeBord/',function(req,res){
+                var users =Utilisateur.find();
+                res=users;
+                res.send();
+
+
+            });  
 
             app.post('/', function(req, res) {
                 var result=false;
@@ -97,7 +108,6 @@ MongoClient.connect(url, function(err, db) {
                          res.status(500).send({ error: "utilisateur existe déja" });
                      }
 
-                   
                 });
             });  
 
@@ -105,14 +115,17 @@ MongoClient.connect(url, function(err, db) {
            
 
             app.post('/transaction/nouvelle', function(req, res, next) {
+                console.log(req.body);
                 if (true) { // si le nom d'utilisateur / mdp sont bons
+
                   res.send();
                 }
                 else {  // envoyer erreur
                   res.status(500).send({ error: "On n'a pas pu enregistrer votre transaction." });
                 }
                 next()
-            });   
+            }); 
+
 
 
             app.use(express.static(__dirname+'/client'));   
