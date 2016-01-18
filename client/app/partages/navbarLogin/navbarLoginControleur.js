@@ -14,6 +14,10 @@ myApp.controller('NavbarLoginControleur', ['$scope', '$route', '$routeParams', '
                     // échec
                 }); 
     }
-
   };
+
+  $scope.pageInscription = function() {
+    $location.path("/inscription");
+  }
+
 }]);
