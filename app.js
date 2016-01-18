@@ -6,8 +6,6 @@ var Db = require('mongodb').Db,
 
 var db = new Db('deuxbergersallemands_web-dev', new Server('localhost', 27017));
 var express=require("express");
-var cookieParser = require('cookie-parser')
-
 /****************************************************/
 var bodyParser = require('body-parser')
 var md5 = require("md5")
@@ -16,7 +14,6 @@ var url = "mongodb://localhost:27017/deuxbergersallemands_web-dev"
 var app = express()
 
 app.use(bodyParser.json()) // Nécessaire pour parser le body des requêtes PUT (Q5)
-app.use(cookieParser())
 
 var getETag = function(body) {
     return md5(body)
@@ -27,15 +24,13 @@ app.set("etag", getETag)
 MongoClient.connect(url, function(err, db) {
 
     db.collection("Utilisateur", function(err, Utilisateur) {
-    
-            app.use(express.static(__dirname+'/client'));
-
+           app.use(express.static(__dirname+'/client'));
             app.get('/', function(req, res) {
                 var cursor = db.Utilisateur.findOne();
                 res.json({"foo": "bar"});
             });   
-
             app.get('/tableauDeBord', function(req, res) {
+                console.log("req.body :",req.body);
                 var users=Utilisateur.find({}).toArray( function(err, users) {
                     if (err) return next(err)
                     if (users == null)
@@ -45,17 +40,6 @@ MongoClient.connect(url, function(err, db) {
                     }
                 })
             });
-
-            app.get('/amis', function(req, res) {
-             
-                Utilisateur.find({}, {_id:0, amis:1}).toArray(function(err, amis) {
-                    if (err) return next(err);
-                  
-                    res.send(amis);
-                });
-            });
-
-
             app.post('/', function(req, res) {
                 var melReq=req.body.mel;
                 var MotDePasseReq=req.body.motDePasse;
@@ -77,61 +61,66 @@ MongoClient.connect(url, function(err, db) {
                 }
                 });
             });
-
             app.post('/inscription', function(req, res) {
-                var result=false;
-                    console.log("/inscription-->req.body ###############################################################");
-                    console.log(req.body);
-
-                    var melReq=req.body.mel;
-                    var NouveauUtilisateur= Utilisateur.findOne({"mel":melReq}, function(err, u) {
-                    if (err) return next(err)
-                   // if (u.mel ==req.body.mel){
-                    if (u==null){
-                        console.log("il n'existe pas un utilisateur avec le mel specifié :",u);
-                        //ajouter NouveauUtilisateur à la collection Utilisateur
-                        UtilisateurAAjouter=req.body;
-                        console.log("à ajouter ",UtilisateurAAjouter);
-                        Utilisateur.insert(UtilisateurAAjouter);
-//                        db.inventory.insert(NouveauUtilisateur);
-
-                         res.send();
-                       // res.status(500).send({ error: "Les cordonées que vous avez fournisses ne sont pas valides." });
-
-                                         }
-                    else{
-                           console.log("utilisateur existe déja :",u);
-                       // console.log(u);
-                         res.status(500).send({ error: "utilisateur existe déja" });
+                console.log(req.body);
+                var melReq=req.body.mel;
+                var NouveauUtilisateur= Utilisateur.findOne({"mel":melReq}, function(err, u) {
+                if (err) return next(err)
+                if (u==null){
+                    UtilisateurAAjouter=req.body;
+                    Utilisateur.insert(UtilisateurAAjouter);
+                    res.send();
+                }
+                else{
+                    console.log("utilisateur existe déja :",u);
+                    res.status(500).send({ error: "utilisateur existe déja" });
                      }
-
                 });
-            });  
-
-
+            });    
+            /*  
+            app.post('/transaction/nouvelle', function(req, res) {
+                 console.log(req.body);
+            });*/
            
-
-            app.post('/transaction/nouvelle', function(req, res, next) {
-                if (true) { // si le nom d'utilisateur / mdp sont bons
-
-                  res.send();
-                }
-                else {  // envoyer erreur
-                  res.status(500).send({ error: "On n'a pas pu enregistrer votre transaction." });
-                }
-                next()
-            }); 
+      })
 
 
+    db.collection("Transaction", function(err, Transaction) {
 
-//            app.use(express.static(__dirname+'/client'));   
- 
      
-  
+            app.post('/transaction/nouvelle', function(req, res) { 
+                var dateCreationTransaction= new Date();              
+                //console.log(req.body);
+                var TransactionAAjouter=({
+                    "UtilisateurCreateur":{"nom":"saber","mel":"frejsaber@yahoo.fr"},
+                    "Groupe":{"nom":"ski"},
+                    "description":"Assiettes Savoyardes",
+                    "type":"Equitable",
+                    "MontantTotal":42.60,
+                    "DateCreation":dateCreationTransaction,
+                    "participants":[
+                      {"participant":{"nom":"tristan","mel":"tristan@gmail.com"},"montantDu":14.6,"montantReglé":0},
+                      {"participant":{"nom":"netty","mel":"netty@gmail.com"},"montantDu":14.6,"montantReglé":0},
+                      {"participant":{"nom":"seif","mel":"seifeddinefraj@live.fr"},"montantDu":14.6,"montantReglé":0}
+                    ],
+                    "statut":"Ouverte",
+                    "DateDeFermeture":null
+                    });
+                console.log("a inseree",TransactionAAjouter);
 
-        app.listen(3000, function() {
-            console.log("Server running...")
+                Transaction.insert(req.body);
+                var objetInsere=Transaction.findOne();
+                console.log("inseree",objetInsere);
+                //(TransactionAAjouter);
+                res.send();
+ 
+            });
+            
         })
+          
+     app.use(express.static(__dirname+'/client'));   
+     app.listen(3000, function() {
+     console.log("Server running...")
+    
     })
 })
-
