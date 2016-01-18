@@ -6,12 +6,10 @@ myApp.controller('TableauDeDetteControleur', ['$scope', '$route', '$routeParams'
   $scope.recuperDettes = function() {
     $scope.transaction = new Transactions();
     $scope.transaction.$query(function (transaction, headers) {
-                   console.log(transaction);
                         // succès
-                }, function (error) {
-                	console.log("erreur");
-                    // échec
-                });
+                       }, function (error) {
+                        // échec
+                       });
   }
 
   $scope.recuperDettes();

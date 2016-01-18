@@ -6,6 +6,8 @@ var Db = require('mongodb').Db,
 
 var db = new Db('deuxbergersallemands_web-dev', new Server('localhost', 27017));
 var express=require("express");
+var cookieParser = require('cookie-parser')
+
 /****************************************************/
 var bodyParser = require('body-parser')
 var md5 = require("md5")
@@ -14,6 +16,7 @@ var url = "mongodb://localhost:27017/deuxbergersallemands_web-dev"
 var app = express()
 
 app.use(bodyParser.json()) // Nécessaire pour parser le body des requêtes PUT (Q5)
+app.use(cookieParser())
 
 var getETag = function(body) {
     return md5(body)
@@ -33,7 +36,6 @@ MongoClient.connect(url, function(err, db) {
             });   
 
             app.get('/tableauDeBord', function(req, res) {
-                console.log("req.body :",req.body);
                 var users=Utilisateur.find({}).toArray( function(err, users) {
                     if (err) return next(err)
                     if (users == null)
@@ -110,7 +112,6 @@ MongoClient.connect(url, function(err, db) {
            
 
             app.post('/transaction/nouvelle', function(req, res, next) {
-                console.log(req.body);
                 if (true) { // si le nom d'utilisateur / mdp sont bons
 
                   res.send();
