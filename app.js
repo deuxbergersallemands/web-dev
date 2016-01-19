@@ -82,8 +82,20 @@ MongoClient.connect(url, function(err, db) {
                 }
             });
             
-            app.get('/tableauDeBord', function(req, res) {
+            app.get('/tableauDeBord', function(req, res, next) {
                 var users=Transaction.find({'preteur.mel' : req.cookies.utilisateur}).toArray( function(err, users) {
+                    if (err) return next(err)
+                    if (users == null)
+                      res.status(404).end()
+                    else{
+                      res.send(users);
+                      next()
+                    }
+               })
+            })
+
+            app.get('/tableauDeBord/Transactions/Participant', function(req, res) {
+                var users=Transaction.find({'participants.participant.mel' : req.cookies.utilisateur}).toArray( function(err, users) {
                     if (err) return next(err)
                     if (users == null)
                       res.status(404).end()
@@ -92,7 +104,6 @@ MongoClient.connect(url, function(err, db) {
                     }
                })
             })
-
 
             app.get('/transaction',function(req,res){
                 if(req!=null){
