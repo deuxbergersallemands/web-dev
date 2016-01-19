@@ -41,7 +41,7 @@ MongoClient.connect(url, function(err, db) {
                     if((u.mel==melReq)&&(u.MotDePasse==MotDePasseReq)){
                         console.log(u.mel,melReq,u.MotDePasse,MotDePasseReq);
                         result=true;
-                        res.send();
+                        res.send(u.solde);
                     }
                     else{
                         res.status(500).send({ error: "Les cordonées que vous avez fournisses ne sont pas valides." });
@@ -54,17 +54,20 @@ MongoClient.connect(url, function(err, db) {
                 console.log(req.body);
                 var melReq=req.body.mel;
                 var NouveauUtilisateur= Utilisateur.findOne({"mel":melReq}, function(err, u) {
-                if (err) return next(err)
-                if (u==null){
+                  if (err) return next(err)
+                  if (u==null){
                     UtilisateurAAjouter=req.body;
                     Utilisateur.insert(UtilisateurAAjouter);
                     res.send();
-                }
-                else{
+                  }
+                  else{
                     console.log("utilisateur existe déja :",u);
                     res.status(500).send({ error: "utilisateur existe déja" });
-                     }
+                  }
+                 });
+
                 });
+
             });  
 
             app.get('/amis', function(req, res) {
@@ -88,6 +91,22 @@ MongoClient.connect(url, function(err, db) {
             });
              
     })
+
+ 
+            app.get('/solde', function(req, res) {
+              var u=Utilisateur.findOne({'mel':req.cookies.utilisateur}, function(err, solde) {
+                if (err) return err;
+                if (solde == null) {
+
+                }
+                else {
+                    var leSolde = "{\"solde\":" + solde.solde + "}";
+                    res.send(leSolde);
+                }
+              });
+            });
+        });
+
 
     /**************** Collection Transaction******************/
     db.collection("Transaction", function(err, Transaction) {
@@ -114,6 +133,16 @@ MongoClient.connect(url, function(err, db) {
            })
         })
 
+            app.get('/tableauDeBord/Transactions/Participant', function(req, res) {
+                var users=Transaction.find({'participants.participant.mel' : req.cookies.utilisateur}).toArray( function(err, users) {
+                    if (err) return next(err)
+                    if (users == null)
+                      res.status(404).end()
+                    else{
+                      res.send(users);
+                    }
+               })
+            })
 
         app.get('/transaction',function(req,res){
             if(req!=null){
