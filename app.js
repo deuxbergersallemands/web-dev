@@ -70,8 +70,10 @@ MongoClient.connect(url, function(err, db) {
 
             });
 
+
+
             app.get('/amis', function(req, res) {
-             
+                console.log("hehe");
                 Utilisateur.find({}).toArray(function(err, amis) {
                     if (err) return next(err);
                   
@@ -80,6 +82,31 @@ MongoClient.connect(url, function(err, db) {
             });
 
 
+            app.post('/amis',function(req,res){
+                 console.log("hiiiiit")
+                 Utilisateur.findOne({"mel":req.cookies.utilisateur}, function(err, utilisateur) {
+                    if (err) return err;
+                    if (utilisateur == null) {}
+                    else {
+                        var idAmi = new require('mongodb').ObjectID(req.body.id);
+                        Utilisateur.findOne({'_id' : idAmi}, function(err, ami) {
+                          if (err) res.send(err);
+                          if (ami == null) {}
+                          else {
+                            Utilisateur.update({"mel":req.cookies.utilisateur}, 
+                                            { $push : 
+                                                 { amis: 
+                                                    { $each: [{nom: ami.nom, mel: ami.mel}]}} });
+                            res.send();
+                          }
+                        });
+                    }
+
+
+                 });
+            });
+
+            
             app.get('/amis/:id',function(req,res){
                 var ami = new require('mongodb').ObjectID(req.params.id)
                  Utilisateur.findOne({'_id' : ami}, function(err, amis) {
@@ -92,7 +119,6 @@ MongoClient.connect(url, function(err, db) {
                    }
                 });
             });
-
 
             app.get('/relations', function(req, res){
 
