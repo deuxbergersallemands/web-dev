@@ -33,21 +33,21 @@ MongoClient.connect(url, function(err, db) {
                 var melReq=req.body.mel;
                 var MotDePasseReq=req.body.motDePasse;
                 var u=Utilisateur.findOne({"mel":melReq}, function(err, u) {
-                if (err) return next(err)
-                if (u == null)
-                    console.log("utilisateur non trouvable");
-                else {
-                    console.log(u);
-                    if((u.mel==melReq)&&(u.MotDePasse==MotDePasseReq)){
-                        console.log(u.mel,melReq,u.MotDePasse,MotDePasseReq);
-                        result=true;
-                        res.send(u.solde);
-                    }
-                    else{
-                        res.status(500).send({ error: "Les cordonées que vous avez fournisses ne sont pas valides." });
-                    }
+                    if (err) return next(err)
+                    if (u == null)
+                        console.log("utilisateur non trouvable");
+                    else {
+                        console.log(u);
+                        if((u.mel==melReq)&&(u.MotDePasse==MotDePasseReq)){
+                            console.log(u.mel,melReq,u.MotDePasse,MotDePasseReq);
+                            result=true;
+                            res.send(u.solde);
+                        }
+                        else{
+                            res.status(500).send({ error: "Les cordonées que vous avez fournisses ne sont pas valides." });
+                        }
 
-                }
+                    }
                 });
             });
             app.post('/inscription', function(req, res) {
@@ -64,12 +64,10 @@ MongoClient.connect(url, function(err, db) {
                     console.log("utilisateur existe déja :",u);
                     res.status(500).send({ error: "utilisateur existe déja" });
                   }
-                 });
-
                 });
 
-            });  
-
+            });
+  
             app.get('/amis', function(req, res) {
              
                 Utilisateur.find({}).toArray(function(err, amis) {
@@ -90,8 +88,6 @@ MongoClient.connect(url, function(err, db) {
 
             });
              
-    })
-
  
             app.get('/solde', function(req, res) {
               var u=Utilisateur.findOne({'mel':req.cookies.utilisateur}, function(err, solde) {
