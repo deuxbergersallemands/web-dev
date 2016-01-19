@@ -9,11 +9,14 @@ var express=require("express");
 /****************************************************/
 var bodyParser = require('body-parser')
 var md5 = require("md5")
+var cookieParser = require('cookie-parser')
+
 
 var url = "mongodb://localhost:27017/deuxbergersallemands_web-dev"
 var app = express()
 
 app.use(bodyParser.json()) // Nécessaire pour parser le body des requêtes PUT (Q5)
+app.use(cookieParser())
 
 var getETag = function(body) {
     return md5(body)
@@ -29,17 +32,7 @@ MongoClient.connect(url, function(err, db) {
                 var cursor = db.Utilisateur.findOne();
                 res.json({"foo": "bar"});
             });   
-            app.get('/tableauDeBord', function(req, res) {
-                console.log("req.body :",req.body);
-                var users=Utilisateur.find({}).toArray( function(err, users) {
-                    if (err) return next(err)
-                    if (users == null)
-                      res.status(404).end()
-                    else{
-                      res.send(users);
-                    }
-                })
-            });
+
             app.post('/', function(req, res) {
                 var melReq=req.body.mel;
                 var MotDePasseReq=req.body.motDePasse;
@@ -79,8 +72,8 @@ MongoClient.connect(url, function(err, db) {
             });               
       })
 
-/**************** Collection Transaction******************/
-db.collection("Transaction", function(err, Transaction) {
+        /**************** Collection Transaction******************/
+        db.collection("Transaction", function(err, Transaction) {
             app.get('/transaction/:id',function(req,res){
                 if(req!=null){
                     var result =Transaction.findOne("req")
@@ -93,6 +86,18 @@ db.collection("Transaction", function(err, Transaction) {
                 }
             });
             
+            app.get('/tableauDeBord', function(req, res) {
+                var users=Transaction.find({'preteur.mel' : req.cookies.utilisateur}).toArray( function(err, users) {
+                    if (err) return next(err)
+                    if (users == null)
+                      res.status(404).end()
+                    else{
+                      res.send(users);
+                    }
+               })
+            })
+
+
             app.get('/transaction',function(req,res){
                 if(req!=null){
                     var result =Transaction.find("req")
@@ -111,9 +116,10 @@ db.collection("Transaction", function(err, Transaction) {
                 res.send();
  
             });
+        });
 
 /**************** Collection Groupe******************/
-db.collection("Groupe", function(err, Groupe) {
+        db.collection("Groupe", function(err, Groupe) {
             app.get('/groupe/:id',function(req,res){
                 if(req!=null){
                     var result =Groupe.findOne("req")
@@ -122,7 +128,7 @@ db.collection("Groupe", function(err, Groupe) {
                         res.send();
                     }
                     else
-                        console.log("reultat introuvable : app.get /groupe/One ")
+                        console.log("resultat introuvable : app.get /groupe/One ")
                 }
             });
 
@@ -143,9 +149,10 @@ db.collection("Groupe", function(err, Groupe) {
                 res.send();
  
             });
+        })
 
-/**************** Collection Historique******************/
-db.collection("Historique", function(err, Historique) {
+        /**************** Collection Historique******************/
+        db.collection("Historique", function(err, Historique) {
             app.get('/historique/:id',function(req,res){
                 if(req!=null){
                     var result =Historique.findOne("req")
@@ -183,7 +190,6 @@ db.collection("Historique", function(err, Historique) {
           
      app.use(express.static(__dirname+'/client'));   
      app.listen(3000, function() {
-     console.log("Server running...")
-    
-    })
-})
+       console.log("Server running...")
+    });
+});
