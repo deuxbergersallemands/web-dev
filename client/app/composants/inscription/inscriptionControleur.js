@@ -15,7 +15,9 @@ myApp.controller('InscriptionControleur', ['$scope', '$route', '$routeParams', '
           $scope.inscription.nom = $scope.nom;
 
           $scope.inscription.$save(function (utilisateur, headers) {
-                    console.log("successs");
+
+                  $cookies.put('utilisateur', $scope.mel)
+                  $location.path("/tableauDeBord")
                     // succès
                 }, function (error) {
                     // échec
