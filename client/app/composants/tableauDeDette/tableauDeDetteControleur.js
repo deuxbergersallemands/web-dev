@@ -1,8 +1,7 @@
-myApp.controller('TableauDeDetteControleur', ['$scope', '$route', '$routeParams', '$location', 'Transactions', 'TransactionsParticipant', '$cookies', function($scope, $route, $routeParams, $location, Transactions, TransactionsParticipant, $cookies) {
-  // TODO
-  $scope.solde = 0; // à remplacer avec fonction
+myApp.controller('TableauDeDetteControleur', ['$scope', '$route', '$routeParams', '$location', 'Transactions', 'TransactionsParticipant', 'Solde', '$cookies', function($scope, $route, $routeParams, $location, Transactions, TransactionsParticipant, Solde, $cookies) {
 
   $scope.mel = $cookies.get('utilisateur');
+  
 
   // TODO
   $scope.recuperDettes = function() {
@@ -19,7 +18,16 @@ myApp.controller('TableauDeDetteControleur', ['$scope', '$route', '$routeParams'
                        });
   }
 
+  $scope.recupererSolde = function() {
+    var solde = Solde.get(function (solde, headers) {
+                        $scope.solde = solde.solde;
+                       }, function (error) {
+                        // échec
+                       });
+  }
+
   $scope.recuperDettes();
+  $scope.recupererSolde();
 
   $scope.ajouterTransaction = function() {
   	$location.path("/transaction/nouvelle");

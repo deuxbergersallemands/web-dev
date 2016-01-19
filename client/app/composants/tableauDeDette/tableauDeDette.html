@@ -10,8 +10,9 @@
   </h3>
   <div class="col-md-6">
    <div class='transaction' ng-repeat="transaction in transactionsParticipant">
-      <div  ng-repeat="participant in transaction.participants" ng-if="participant.participant.mel == mel"> 
+      <div ng-repeat="participant in transaction.participants" ng-if="participant.participant.mel == mel"> 
        Vous devez {{participant.montantDu}} à {{transaction.preteur.nom}} pour {{transaction.description}}
+       <button class='btn btn-primary'> Régler  </button>
       </div>
     </div>
   </div>
