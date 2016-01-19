@@ -12,7 +12,7 @@
    <div class='transaction' ng-repeat="transaction in transactionsParticipant">
       <div ng-repeat="participant in transaction.participants" ng-if="participant.participant.mel == mel"> 
        Vous devez {{participant.montantDu}} à {{transaction.preteur.nom}} pour {{transaction.description}}
-       <button class='btn btn-primary'> Régler  </button>
+       <button class='btn btn-primary'ng-click="dirigerVers(transaction._id)"> Régler  </button>
       </div>
     </div>
   </div>
