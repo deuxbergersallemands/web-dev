@@ -1,14 +1,13 @@
 <div ng-controller="AjouterAmisControleur" class="col-md-6 AjouterAMis">
-  <table class='table table-bordered table-striped'>
+  <table class='table ajouerAmis table-striped'>
 
     <h2>Ajouter un Ami</h2>
 
     <div  class="col-md-6" >
     	Nom : <input name="inputAmi" ng-model="nomAmi" placeholder="Saisir nouvel ami" required="obligatoire">
-	    <div ng-repeat="n in noms | filter: nomAmi" id="nameT" >
-	  			<h1> kdkdkdkd </h1>
-	  	</div>
-	  	<button class="btn btn-primary btn-block" ng-click="ajouterAmi()"> + Ami(s) </button>
+	    <ng-form ng-repeat="n in testtt | filter: nomAmi" id="nameT" >
+	  			<h3> {{n.nom}} : {{n.mel}}</h3> <button type="submit" class= "btn btn-primary"> +</button>
+	  	</ng-form>
 	</div>
 
   </table>

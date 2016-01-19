@@ -2,19 +2,27 @@
   <h1>
     Relations
   </h1>
+
+  <button class='btn btn-primary' ng-click="ajouterAmis()"> Ajouter un Ami </button> <br/><br/>
+
   <div class="col-md-12">
+
     <div class="col-md-6">
       <input ng-model="chercheAmi"/>
       <div ng-repeat="ami in amis | filter: chercheAmi">
-        {{ami.texte}}
+        <div ng-repeat=" a in ami.amis | filter: chercheAmi" >
+          <h1> {{a.nom}} </h1>
+        </div>
       </div>
     </div>
+
+
     <div class="col-md-6">
       <input ng-model="chercheGroupe"/>
-
       <div ng-repeat="groupe in groupes | filter:chercheGroupe ">
         {{groupe.texte}}
       </div>
     </div>
+
   </div>
 </div>

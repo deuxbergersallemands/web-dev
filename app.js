@@ -65,126 +65,147 @@ MongoClient.connect(url, function(err, db) {
                     res.status(500).send({ error: "utilisateur existe déja" });
                      }
                 });
-            });               
+            });  
+
+            app.get('/amis', function(req, res) {
+             
+                Utilisateur.find({}).toArray(function(err, amis) {
+                    if (err) return next(err);
+                  
+                    res.send(amis);
+                });
+            });
+
+
+            app.get('/relations', function(req, res){
+
+                Utilisateur.find({'mel' : req.cookies.utilisateur}, {_id:0, amis:1}).toArray(function(err, amis) {
+                    if (err) return next(err);
+                  
+                    res.send(amis);
+                });
+
+            });
+             
     })
 
-        /**************** Collection Transaction******************/
-        db.collection("Transaction", function(err, Transaction) {
-            app.get('/transaction/:id',function(req,res){
-                if(req!=null){
-                    var result =Transaction.findOne("req")
-                    if(result!=null){
-                        res.result=result;
-                        res.send();
-                    }
-                    else
-                        console.log("reultat introuvable : app.get /transaction/One ")
+    /**************** Collection Transaction******************/
+    db.collection("Transaction", function(err, Transaction) {
+        app.get('/transaction/:id',function(req,res){
+            if(req!=null){
+                var result =Transaction.findOne("req")
+                if(result!=null){
+                    res.result=result;
+                    res.send();
                 }
-            });
-            
-            app.get('/tableauDeBord', function(req, res) {
-                var users=Transaction.find({'preteur.mel' : req.cookies.utilisateur}).toArray( function(err, users) {
-                    if (err) return next(err)
-                    if (users == null)
-                      res.status(404).end()
-                    else{
-                      res.send(users);
-                    }
-               })
-            })
-
-
-            app.get('/transaction',function(req,res){
-                if(req!=null){
-                    var result =Transaction.find("req")
-                    if(result!=null){
-                        res.result=result;
-                        res.send();
-                    }
-                    else
-                        console.log("reultat introuvable : app.get /transaction ")
-                }
-            });
-        
-            app.post('/transaction/nouvelle', function(req, res) { 
-                var dateCreationTransaction= new Date();              
-                Transaction.insert(req.body);
-                res.send();
- 
-            });
+                else
+                    console.log("reultat introuvable : app.get /transaction/One ")
+            }
         });
+        
+        app.get('/tableauDeBord', function(req, res) {
+            var users=Transaction.find({'preteur.mel' : req.cookies.utilisateur}).toArray( function(err, users) {
+                if (err) return next(err)
+                if (users == null)
+                  res.status(404).end()
+                else{
+                  res.send(users);
+                }
+           })
+        })
+
+
+        app.get('/transaction',function(req,res){
+            if(req!=null){
+                var result =Transaction.find("req")
+                if(result!=null){
+                    res.result=result;
+                    res.send();
+                }
+                else
+                    console.log("reultat introuvable : app.get /transaction ")
+            }
+        });
+    
+        app.post('/transaction/nouvelle', function(req, res) { 
+            var dateCreationTransaction= new Date();              
+            Transaction.insert(req.body);
+            res.send();
+
+        });
+    });
 
 /**************** Collection Groupe******************/
-        db.collection("Groupe", function(err, Groupe) {
-            app.get('/groupe/:id',function(req,res){
-                if(req!=null){
-                    var result =Groupe.findOne("req")
-                    if(result!=null){
-                        res.result=result;
-                        res.send();
-                    }
-                    else
-                        console.log("resultat introuvable : app.get /groupe/One ")
+    db.collection("Groupe", function(err, Groupe) {
+        app.get('/groupe/:id',function(req,res){
+            if(req!=null){
+                var result =Groupe.findOne("req")
+                if(result!=null){
+                    res.result=result;
+                    res.send();
                 }
-            });
+                else
+                    console.log("resultat introuvable : app.get /groupe/One ")
+            }
+        });
 
-            app.get('/groupe',function(req,res){
-                if(req!=null){
-                    var result =Groupe.find("req")
-                    if(result!=null){
-                        res.result=result;
-                        res.send();
-                    }
-                    else
-                        console.log("reultat introuvable : app.get /groupe ")
+        app.get('/groupe',function(req,res){
+            if(req!=null){
+                var result =Groupe.find("req")
+                if(result!=null){
+                    res.result=result;
+                    res.send();
                 }
-            });
+                else
+                    console.log("reultat introuvable : app.get /groupe ")
+            }
+        });
+    
+        app.post('/groupe/nouvelle', function(req, res) {             
+            Groupe.insert(req.body);
+            res.send();
+
+        });
+    })
+
+    /**************** Collection Historique******************/
+    db.collection("Historique", function(err, Historique) {
+        app.get('/historique/:id',function(req,res){
+            if(req!=null){
+                var result =Historique.findOne("req")
+                if(result!=null){
+                    res.result=result;
+                    res.send();
+                }
+                else
+                    console.log("reultat introuvable : app.get /historique/One ")
+            }
+        });
+
+        app.get('/historique',function(req,res){
+            if(req!=null){
+                var result =Historique.find("req")
+                if(result!=null){
+                    res.result=result;
+                    res.send();
+                }
+                else
+                    console.log("reultat introuvable : app.get /historique ")
+            }
+        });
+    
+        app.post('/historique/nouvelle', function(req, res) {             
+            Historique.insert(req.body);
+            res.send();
+
+        });
+
         
-            app.post('/groupe/nouvelle', function(req, res) {             
-                Groupe.insert(req.body);
-                res.send();
- 
-            });
-        })
-
-        /**************** Collection Historique******************/
-        db.collection("Historique", function(err, Historique) {
-            app.get('/historique/:id',function(req,res){
-                if(req!=null){
-                    var result =Historique.findOne("req")
-                    if(result!=null){
-                        res.result=result;
-                        res.send();
-                    }
-                    else
-                        console.log("reultat introuvable : app.get /historique/One ")
-                }
-            });
-
-            app.get('/historique',function(req,res){
-                if(req!=null){
-                    var result =Historique.find("req")
-                    if(result!=null){
-                        res.result=result;
-                        res.send();
-                    }
-                    else
-                        console.log("reultat introuvable : app.get /historique ")
-                }
-            });
-        
-            app.post('/historique/nouvelle', function(req, res) {             
-                Historique.insert(req.body);
-                res.send();
- 
-            });
-
-            
-        })
+    })
 
     /**************///
           
-     app.use(express.static(__dirname+'/client'));   
+     //app.use(express.static(__dirname+'/client'));   
      app.listen(3000, function() {
        console.log("Server running...")
     });
