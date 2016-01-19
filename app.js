@@ -33,10 +33,10 @@ MongoClient.connect(url, function(err, db) {
                 var melReq=req.body.mel;
                 var MotDePasseReq=req.body.motDePasse;
                 var u=Utilisateur.findOne({"mel":melReq}, function(err, u) {
-                if (err) return next(err)
-                if (u == null)
+                  if (err) return next(err)
+                  if (u == null)
                     console.log("utilisateur non trouvable");
-                else {
+                  else {
                     console.log(u);
                     if((u.mel==melReq)&&(u.MotDePasse==MotDePasseReq)){
                         console.log(u.mel,melReq,u.MotDePasse,MotDePasseReq);
@@ -46,15 +46,14 @@ MongoClient.connect(url, function(err, db) {
                     else{
                         res.status(500).send({ error: "Les cordonées que vous avez fournisses ne sont pas valides." });
                     }
-
-                }
+                  }
                 });
             });
             app.post('/inscription', function(req, res) {
                 console.log(req.body);
                 var melReq=req.body.mel;
                 var NouveauUtilisateur= Utilisateur.findOne({"mel":melReq}, function(err, u) {
-                  if (err) return next(err)
+                  if (err) return err;
                   if (u==null){
                     UtilisateurAAjouter=req.body;
                     Utilisateur.insert(UtilisateurAAjouter);
@@ -68,7 +67,6 @@ MongoClient.connect(url, function(err, db) {
 
                 });
 
-            });  
 
             app.get('/amis', function(req, res) {
              
@@ -90,7 +88,7 @@ MongoClient.connect(url, function(err, db) {
 
             });
              
-    })
+    
 
  
             app.get('/solde', function(req, res) {
@@ -108,30 +106,31 @@ MongoClient.connect(url, function(err, db) {
         });
 
 
-    /**************** Collection Transaction******************/
-    db.collection("Transaction", function(err, Transaction) {
-        app.get('/transaction/:id',function(req,res){
-            if(req!=null){
-                var result =Transaction.findOne("req")
-                if(result!=null){
-                    res.result=result;
-                    res.send();
-                }
-                else
-                    console.log("reultat introuvable : app.get /transaction/One ")
-            }
-        });
-        
-        app.get('/tableauDeBord', function(req, res) {
-            var users=Transaction.find({'preteur.mel' : req.cookies.utilisateur}).toArray( function(err, users) {
-                if (err) return next(err)
-                if (users == null)
-                  res.status(404).end()
-                else{
-                  res.send(users);
-                }
-           })
-        })
+        /**************** Collection Transaction******************/
+        db.collection("Transaction", function(err, Transaction) {
+            app.get('/transaction/:id',function(req,res){
+                console.log(req.params.id);
+                 Transaction.findOne({'_id' : req.params.id}, function(err, transaction) {
+                   if (err) return err;
+                   if (transaction == null) {
+                     console.log("n'existe passss");
+                   }
+                   else {
+                    res.send(transaction);
+                   }
+                });
+            });
+            
+            app.get('/tableauDeBord', function(req, res) {
+                var users=Transaction.find({'preteur.mel' : req.cookies.utilisateur}).toArray( function(err, users) {
+                    if (err) return next(err)
+                    if (users == null)
+                      res.status(404).end()
+                    else{
+                      res.send(users);
+                    }
+               })
+            });
 
             app.get('/tableauDeBord/Transactions/Participant', function(req, res) {
                 var users=Transaction.find({'participants.participant.mel' : req.cookies.utilisateur}).toArray( function(err, users) {
@@ -142,7 +141,7 @@ MongoClient.connect(url, function(err, db) {
                       res.send(users);
                     }
                })
-            })
+            });
 
         app.get('/transaction',function(req,res){
             if(req!=null){
