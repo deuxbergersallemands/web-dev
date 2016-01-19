@@ -5,7 +5,7 @@ myApp.controller('TableauDeDetteControleur', ['$scope', '$route', '$routeParams'
   // TODO
   $scope.recuperDettes = function() {
     var transactions = Transactions.query(function (transaction, headers) {
-                        // succès
+                        $scope.transactions = transaction;
                        }, function (error) {
                         // échec
                        });

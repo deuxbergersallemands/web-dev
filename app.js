@@ -28,12 +28,8 @@ MongoClient.connect(url, function(err, db) {
 
     db.collection("Utilisateur", function(err, Utilisateur) {
            app.use(express.static(__dirname+'/client'));
-            app.get('/', function(req, res) {
-                var cursor = db.Utilisateur.findOne();
-                res.json({"foo": "bar"});
-            });   
-
-            app.post('/', function(req, res) {
+  
+           app.post('/', function(req, res) {
                 var melReq=req.body.mel;
                 var MotDePasseReq=req.body.motDePasse;
                 var u=Utilisateur.findOne({"mel":melReq}, function(err, u) {
@@ -70,7 +66,7 @@ MongoClient.connect(url, function(err, db) {
                      }
                 });
             });               
-      })
+    })
 
         /**************** Collection Transaction******************/
         db.collection("Transaction", function(err, Transaction) {
