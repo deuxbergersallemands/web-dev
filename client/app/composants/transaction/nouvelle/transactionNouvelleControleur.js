@@ -1,4 +1,4 @@
-myApp.controller('TransactionNouvelleControleur', ['$scope', '$route', '$routeParams', '$location', '$cookies','TransactionNouvelle', function($scope, $route, $routeParams, $location, $cookies, TransactionNouvelle) {
+myApp.controller('TransactionNouvelleControleur', ['$scope', '$route', '$routeParams', '$location', '$cookies','TransactionNouvelle', 'Participants', function($scope, $route, $routeParams, $location, $cookies, TransactionNouvelle, Participants) {
   
   $scope.noms = [];
 
@@ -28,6 +28,14 @@ myApp.controller('TransactionNouvelleControleur', ['$scope', '$route', '$routePa
                     // échec
                 });
   }
+
+
+  $scope.lister = function() {    
+    Participants.query(function (participant, error) {
+               $scope.noms = participant;
+  })}
+
+  $scope.lister();
 
 
 }]);

@@ -11,6 +11,12 @@
   		<div ng-repeat="nom in noms" id="nameT" >
   			{{nom}}
   		</div>
+      <ng-form ng-repeat="nom in noms" id="nomListe" >
+        <ng-form ng-repeat="n in nom.amis" id="nomListe" >
+              {{n.nom}}
+        </ng-form>
+      </ng-form>
+
   		<button class="btn btn-primary btn-block" ng-click="ajouterNom()"> + Participant </button>
   		<br/>
   		<label for="Description"> Description: </label> <br/>
@@ -24,7 +30,7 @@
 	      <option ng-repeat="nom in noms">{{nom}}</option>
 	    </select><br/><br/>
   		<br/><br/>
-  		<label for="SelectTypeTransac"> Sélectionner le type de transaction: </label><br>
+  		<label for="SelectTypeTransac"> Sélectionner le type de transaction: </label> <br/>
 	    <select name="SelectTypeTransac" ng-model="typeTransaction">
 	      <option value="exacte">Exacte</option>
 	      <option value="equitable">Equitable</option>
