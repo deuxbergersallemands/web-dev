@@ -8,11 +8,9 @@ myApp.controller('TransactionIdControleur', ['$scope', '$route', '$routeParams',
 
   $scope.recupererTransaction = function() {
   	TransactionId.get({id:$scope.tid},function (transaction, headers) {
-  		console.log("successss")
+
   		$scope.transaction = transaction;
                        }, function (error) {
-                       	console.log('errrerrurrr');
-                        // échec
                        });
   }
 

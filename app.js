@@ -124,8 +124,8 @@ MongoClient.connect(url, function(err, db) {
         /**************** Collection Transaction******************/
         db.collection("Transaction", function(err, Transaction) {
             app.get('/transaction/:id',function(req,res){
-                console.log(req.params.id);
-                 Transaction.findOne({'_id' : req.params.id}, function(err, transaction) {
+                var test = new require('mongodb').ObjectID(req.params.id)
+                 Transaction.findOne({'_id' : test}, function(err, transaction) {
                    if (err) return err;
                    if (transaction == null) {
                      console.log("n'existe passss");
