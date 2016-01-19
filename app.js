@@ -226,10 +226,7 @@ MongoClient.connect(url, function(err, db) {
         app.post('/historique/nouvelle', function(req, res) {             
             Historique.insert(req.body);
             res.send();
-
-        });
-
-        
+        });        
     })
 
     /**************///
