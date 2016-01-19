@@ -80,10 +80,9 @@ MongoClient.connect(url, function(err, db) {
             });
 
 
-            app.get('/amis/:id', function(req, res) {
-
-                console.log(req.params.id);
-                 Utilisateur.findOne({'_id' : req.params.id}, function(err, amis) {
+            app.get('/amis/:id',function(req,res){
+                var ami = new require('mongodb').ObjectID(req.params.id)
+                 Utilisateur.findOne({'_id' : ami}, function(err, amis) {
                    if (err) return err;
                    if (amis == null) {
                      console.log("n'existe passss");
@@ -118,6 +117,7 @@ MongoClient.connect(url, function(err, db) {
                 }
               });
             });
+
         });
 
 
