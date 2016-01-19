@@ -1,0 +1,35 @@
+<div ng-controller="AjouterGroupesControleur" class="col-md-6 AjouterAMis">
+  <table class='table table-bordered table-striped'>
+
+    <h2>Ajouter un Groupe</h2>
+
+   
+
+
+	<ng-form name="FormGroupe"  class="maGroupe">
+	<br/><br/>
+  		<label for="Montant"> Nom du groupe (evenement): </label> <br/>
+  		<input  ng-model="NomGroupe" required="obligatoire">  </input>
+  		<br/><br/>
+  	Ce Groupe fait l'objet de l'organisation d'un evenement pour les utilisteurs suivants :<br/><br/>
+  		Nom : <input name="inputName" ng-model="nomAjouter" placeholder="Saisir votre nom" required="obligatoire">
+  		<div ng-repeat="nom in noms" id="nameT" >
+  			{{nom}}
+  		</div>
+  		<button class="btn btn-primary btn-block" ng-click="ajouterNom()"> + Membre </button>
+  		<br/>
+  		<label for="Description"> Description: </label> <br/>
+  		<textarea ng-model="description" required="obligatoire"> ... </textarea>
+ 
+	    <br/><br/>
+  		<br/><br/>
+  		
+  		<br>
+	  
+	  <br/><br/>
+  		<button class="btn btn-primary btn-block" ng-click="sauvegarder()"> Sauvegarder </button>
+
+  </ng-form>
+
+  </table>
+</div>
