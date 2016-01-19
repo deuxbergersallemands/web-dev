@@ -80,6 +80,21 @@ MongoClient.connect(url, function(err, db) {
             });
 
 
+            app.get('/amis/:id', function(req, res) {
+
+                console.log(req.params.id);
+                 Utilisateur.findOne({'_id' : req.params.id}, function(err, amis) {
+                   if (err) return err;
+                   if (amis == null) {
+                     console.log("n'existe passss");
+                   }
+                   else {
+                    res.send(amis);
+                   }
+                });
+            });
+
+
             app.get('/relations', function(req, res){
 
                 Utilisateur.find({'mel' : req.cookies.utilisateur}, {_id:0, amis:1}).toArray(function(err, amis) {
