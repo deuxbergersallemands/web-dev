@@ -26,5 +26,14 @@ myApp.controller('AjouterGroupesControleur', ['$scope', '$route', '$routeParams'
                     // échec
                 });
   }
+
+  $scope.recupererAmis = function() {
+    Amis.query(function (transaction, error) {
+     $scope.amis = transaction;
+          // succès
+      }, function (error) {
+          // échec
+      });
+  }
 /**/
 }]);

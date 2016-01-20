@@ -19,4 +19,9 @@ myApp.controller('RelationsControleur', ['$scope', '$route', '$routeParams', '$l
 
   }
 
+  $scope.ajouterGroupe = function() {
+    $location.path("/groupes");
+
+  }
+
 }]);
