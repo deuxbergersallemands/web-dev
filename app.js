@@ -173,7 +173,7 @@ MongoClient.connect(url, function(err, db) {
 
             app.get('/tableauDeBord/Transactions/Participant', function(req, res) {
                 var users=Transaction.find({'participants.participant.mel' : req.cookies.utilisateur}).toArray( function(err, users) {
-                    if (err) return next(err)
+                    if (err) return res.send(err);
                     if (users == null)
                       res.status(404).end()
                     else{
@@ -216,22 +216,25 @@ MongoClient.connect(url, function(err, db) {
             }
         });
 
-        app.get('/groupe',function(req,res){
-            if(req!=null){
-                var result =Groupe.find("req")
-                if(result!=null){
-                    res.result=result;
-                    res.send();
+      
+ 
+        // Récupérer tous les groups dont l'utilisateur fait parti.
+        app.get('/groupes',function(req,res){
+            Groupe.find({'membres.mel' : req.cookies.utilisateur}).toArray( function(err, groupes) {
+              if (err) res.send(err);
+              if (groupes == null) {res.send(err);}
+              else {
+                    res.send(groupes);
                 }
-                else
-                    console.log("reultat introuvable : app.get /groupe ")
-            }
+
         });
+    })
     
-        app.post('/groupe/nouvelle', function(req, res) {             
+        app.post('/groupes/nouveau', function(req, res) {   
+            console.log("post /groupes/nouveau")   
+            console.log(req.body) ;      
             Groupe.insert(req.body);
             res.send();
-
         });
     })
 
