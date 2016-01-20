@@ -53,12 +53,12 @@ MongoClient.connect(url, function(err, db) {
             });
 
             app.post('/inscription', function(req, res) {
-                console.log(req.body);
                 var melReq=req.body.mel;
                 var NouveauUtilisateur= Utilisateur.findOne({"mel":melReq}, function(err, u) {
                   if (err) return err;
                   if (u==null){
                     UtilisateurAAjouter=req.body;
+                    UtilisateurAAjouter.solde = 0;
                     Utilisateur.insert(UtilisateurAAjouter);
                     res.send();
                   }
@@ -70,8 +70,9 @@ MongoClient.connect(url, function(err, db) {
 
             });
 
+
+
             app.get('/amis', function(req, res) {
-             
                 Utilisateur.find({}).toArray(function(err, amis) {
                     if (err) return next(err);
                   
@@ -80,6 +81,30 @@ MongoClient.connect(url, function(err, db) {
             });
 
 
+            app.post('/amis',function(req,res){
+                 Utilisateur.findOne({"mel":req.cookies.utilisateur}, function(err, utilisateur) {
+                    if (err) return err;
+                    if (utilisateur == null) {}
+                    else {
+                        var idAmi = new require('mongodb').ObjectID(req.body.id);
+                        Utilisateur.findOne({'_id' : idAmi}, function(err, ami) {
+                          if (err) res.send(err);
+                          if (ami == null) {}
+                          else {
+                            Utilisateur.update({"mel":req.cookies.utilisateur}, 
+                                            { $push : 
+                                                 { amis: 
+                                                    { $each: [{nom: ami.nom, mel: ami.mel}]}} });
+                            res.send();
+                          }
+                        });
+                    }
+
+
+                 });
+            });
+
+            
             app.get('/amis/:id',function(req,res){
                 var ami = new require('mongodb').ObjectID(req.params.id)
                  Utilisateur.findOne({'_id' : ami}, function(err, amis) {
@@ -92,7 +117,6 @@ MongoClient.connect(url, function(err, db) {
                    }
                 });
             });
-
 
             app.get('/relations', function(req, res){
 

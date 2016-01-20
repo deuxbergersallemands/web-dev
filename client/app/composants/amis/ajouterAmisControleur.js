@@ -1,22 +1,26 @@
-myApp.controller('AjouterAmisControleur', ['$scope', '$route', '$routeParams', '$location', '$cookies', 'Amis', function($scope, $route, $routeParams, $location, $cookies, Amis) {
-
-
+myApp.controller('AjouterAmisControleur', ['$scope', '$route', '$routeParams', '$location', '$cookies', 'Amis', 'AmiNouveau', function($scope, $route, $routeParams, $location, $cookies, Amis, AmiNouveau) {
 
   $scope.recupererAmis = function() {
-    
-  var amis = Amis.query(function (transaction, error) {
-               $scope.testtt = transaction;
-                  for(i in transaction )
-                    console.log(transaction[i]);
-                        // succès
-                }, function (error) {
-                  console.log("erreur");
-                    // échec
-                });
-
-    console.log(amis)
+    Amis.query(function (transaction, error) {
+     $scope.utilisateurs = transaction;
+          // succès
+      }, function (error) {
+          // échec
+      });
   }
 
+  $scope.ajouterAmi = function(id) {
+    $scope.amiNouveau = new Amis();
+    $scope.amiNouveau.id = id;
+    $scope.amiNouveau.$save(function(ami, etc) {
+      console.log("addddd");
+    }, function(error) {
+      console.log("errrr");
+    });
+  };
+
     $scope.recupererAmis();
+
+
 
 }]);
