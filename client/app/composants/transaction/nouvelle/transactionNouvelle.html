@@ -16,12 +16,12 @@
   		</div>
       <div>
         <h3> Dans votre groupe: </h3>
-        <div ng-repeat="a in participants">
-          <h5> {{a.nom}} </h5>
+        <div ng-repeat="participant in participants">
+          <div ng-repeat="a in participant">
+            <h5> {{a.nom}} </h5>
+          </div>
         </div>
       </div>
-  		<button class="btn btn-primary btn-block" ng-click="ajouterNom()"> + Participant </button>
-  		<br/>
   		<label for="Description"> Description: </label> <br/>
   		<textarea ng-model="description" required="obligatoire"> ... </textarea>
   		<br/><br/>
@@ -29,14 +29,15 @@
   		<input type="number" min="0.00" max="9999999999.99" ng-model="montant" required="obligatoire">  </input>
   		<br/><br/>
   		 Payé par:
-  		<select name="SelectParticipantRembourse" ng-model="participantRembourse">
-	      <option ng-repeat="ami in participants">{{ami.nom}}</option>
-	    </select><br/><br/>
+  		<select ng-model="participantRembourse">
+	      <option ng-repeat="part in participants">{{part.participant.mel}} </option>
+	    </select>
+      <br/><br/>
   		<br/><br/>
   		<label for="SelectTypeTransac"> Sélectionner le type de transaction: </label> <br/>
 	    <select name="SelectTypeTransac" ng-model="typeTransaction">
-	      <option value="exacte">Exacte</option>
-	      <option value="equitable">Equitable</option>
+	      <option value="Exacte">Exacte</option>
+	      <option value="Equitable">Equitable</option>
 	    </select><br/><br/>
   		<button class="btn btn-primary btn-block" ng-click="sauvegarder()"> Sauvegarder </button>
 

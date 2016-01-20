@@ -168,7 +168,8 @@ MongoClient.connect(url, function(err, db) {
             });
             
             app.get('/tableauDeBord', function(req, res) {
-                var users=Transaction.find({'preteur.mel' : req.cookies.utilisateur}).toArray( function(err, users) {
+                console.log("dkdkdkdkdkdk");
+                var users=Transaction.find({'debiteur.mel' : req.cookies.utilisateur}).toArray( function(err, users) {
                     if (err) return next(err)
                     if (users == null)
                       res.status(404).end()
@@ -179,6 +180,7 @@ MongoClient.connect(url, function(err, db) {
             });
 
             app.get('/tableauDeBord/Transactions/Participant', function(req, res) {
+                console.log("chemin long")
                 var users=Transaction.find({'participants.participant.mel' : req.cookies.utilisateur}).toArray( function(err, users) {
                     if (err) return res.send(err);
                     if (users == null)
@@ -204,13 +206,14 @@ MongoClient.connect(url, function(err, db) {
         app.post('/transaction/nouvelle', function(req, res) { 
             var dateCreationTransaction= new Date(); 
             var objHistorique= new Object();
-            console.log(req.body);
+        
+
             objHistorique.Concernes=req.body.participants;
             var message="ajout de transaction ";
-            message+= req.body.nom;
+            message+= req.cookies.nom;
             objHistorique.message=message;
 
-             saveHistaurique(objHistorique);             
+            saveHistaurique(objHistorique);             
             Transaction.insert(req.body);
             res.send();
 
@@ -263,7 +266,6 @@ MongoClient.connect(url, function(err, db) {
     })
         function saveHistaurique(data){
 
-            console.log(data);
             var dateHistorique = new Date();
             data.date=dateHistorique;
             Historique.insert(data);
