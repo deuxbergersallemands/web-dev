@@ -13,18 +13,17 @@
   		<br/><br/>
   	Ce Groupe fait l'objet de l'organisation d'un evenement pour les utilisteurs suivants :<br/><br/>
   		Nom : 
-      <input name="inputName" ng-model="nomAjouter" placeholder="Saisir votre nom" required="obligatoire">
-  		<div ng-repeat="nom in noms" id="nameT" >
-  			{{nom}}
-  		</div>
-  		<button class="btn btn-primary btn-block" ng-click="ajouterNom()"> + Membre </button>
+      <input name="inputName" ng-model="chercheAmi" placeholder="Chercher parmi vos amis">
   		<br/>
-
-      <ng-form ng-repeat="ami in amis | filter: nomami" id="nameAmi" >
-          <p> {{ami.nom}} : {{ami.mel}}</p> 
-          <button type="submit" class= "btn btn-primary" ng-click="ajouterAmi(ami._id)">+</button>
-      </ng-form>
-
+      <div ng-repeat="ami in amis | filter: chercheAmi">
+        <div ng-repeat="a in ami.amis">
+           <h6>{{a.nom}}</h6>
+           <button class="btn btn-primary" ng-click="ajouterAmi(a)"> + </button> 
+        </div>
+      </div>
+      <div ng-repeat="nom in noms" id="nameT" >
+        Ajouté:  {{nom.nom}}
+      </div>
   		<label for="Description"> Description: </label> <br/>
   		<textarea ng-model="description" required="obligatoire"> ... </textarea>
  
