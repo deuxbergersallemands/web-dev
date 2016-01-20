@@ -122,7 +122,6 @@ MongoClient.connect(url, function(err, db) {
 
                 Utilisateur.find({'mel' : req.cookies.utilisateur}, {_id:0, amis:1}).toArray(function(err, amis) {
                     if (err) return next(err);
-                  
                     res.send(amis);
                 });
 
@@ -130,14 +129,11 @@ MongoClient.connect(url, function(err, db) {
              
  
             app.get('/solde', function(req, res) {
-              var u=Utilisateur.findOne({'mel':req.cookies.utilisateur}, function(err, solde) {
-                if (err) return err;
-                if (solde == null) {
-
-                }
+              var u=Utilisateur.findOne({'mel':req.cookies.utilisateur}, {'solde':1, 'nom': 1}, function(err, solde) {
+                if (err)  res.send(err);
+                if (solde == null) {}
                 else {
-                    var leSolde = "{\"solde\":" + solde.solde + "}";
-                    res.send(leSolde);
+                    res.send(solde);
                 }
               });
             });

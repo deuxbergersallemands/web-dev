@@ -8,13 +8,18 @@
   <ng-form name="FormTransac"  class="maTransac">
   	Cette transaction est établie entre:<br/><br/>
   		Nom : <input name="inputName" ng-model="nomAjouter" placeholder="Saisir votre nom" required="obligatoire">
-  		<div ng-repeat="nom in noms" id="nameT" >
-  			{{nom}}
+  		<div ng-repeat="ami in amis | filter:nomAjouter" id="nameT" >
+        <div ng-repeat="a in ami.amis">
+          <h5> {{a.nom}} {{a.mel}} </h5> 
+          <button class='btn btn-primary' ng-click="ajouterAmi(a)"> + </button>
+        </div>
   		</div>
-      <ng-form ng-repeat="nom in noms" id="nomListe" >
-        <h4> qmfldkjqsmldfk  </h4>
-      </ng-form>
-
+      <div>
+        <h3> Dans votre groupe: </h3>
+        <div ng-repeat="a in participants">
+          <h5> {{a.nom}} </h5>
+        </div>
+      </div>
   		<button class="btn btn-primary btn-block" ng-click="ajouterNom()"> + Participant </button>
   		<br/>
   		<label for="Description"> Description: </label> <br/>
@@ -25,7 +30,7 @@
   		<br/><br/>
   		 Payé par:
   		<select name="SelectParticipantRembourse" ng-model="participantRembourse">
-	      <option ng-repeat="nom in noms">{{nom}}</option>
+	      <option ng-repeat="ami in participants">{{ami.nom}}</option>
 	    </select><br/><br/>
   		<br/><br/>
   		<label for="SelectTypeTransac"> Sélectionner le type de transaction: </label> <br/>
