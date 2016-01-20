@@ -15,7 +15,7 @@ var cookieParser = require('cookie-parser')
 var url = "mongodb://localhost:27017/deuxbergersallemands_web-dev"
 var app = express()
 
-app.use(bodyParser.json()) // Nécessaire pour parser le body des requêtes PUT (Q5)
+app.use(bodyParser.json())
 app.use(cookieParser())
 
 var getETag = function(body) {
