@@ -158,7 +158,7 @@ db.Transaction.insert({
          "montantReglé":15
       }
    ],
-   "statut":"Arrongée",
+   "statut":"Equitable",
    "DateDeFermeture":dateArrangement,
    "preteur":{"nom":"netty","mel":"netty@gmail.com"}
    
