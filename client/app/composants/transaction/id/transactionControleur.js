@@ -17,7 +17,8 @@ myApp.controller('TransactionIdControleur', ['$scope', '$route', '$routeParams',
   }
 
   $scope.payer = function() {
-    console.log("PAYER");
+   TransactionId.get({id:$scope.tid},function (transaction, headers) {
+      //à compléter
   }
 
   $scope.recuperMontantDu();
