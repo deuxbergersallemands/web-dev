@@ -1,6 +1,9 @@
-myApp.controller('ActiviteRecenteControleur', ['$scope', '$location', function($scope, $route, $routeParams, $location) {
+myApp.controller('ActiviteRecenteControleur', ['$scope', '$route', '$routeParams', '$location','ActivitesRecentes',
+ function($scope, $route, $routeParams, $location,ActivitesRecentes) {
+   ActivitesRecentes.query(function (activites, headers) {
+                        $scope.activitesRecentes = activites;
+                       }, function (error) {
+                        // échec
+                       });
 
- // À remplacer avec une fonction
- $scope.activitesRecentes = [{texte:'activite1'}, {texte:'activite2'}, {texte:'activite3'}, {texte:'activite4'}, 
-                             {texte:'activite5'}, {texte:'activite6'}, {texte:'activite7'}, {texte:'activite8'}];
 }]);
