@@ -38,6 +38,7 @@ myApp.controller('TableauDeDetteControleur', ['$scope', '$route', '$routeParams'
 
   $scope.dirigerVers = function(chemin) {
     console.log("chemin: " + chemin);
+    $location.path('/transaction/'+chemin);
   }
 
 }]);

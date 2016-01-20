@@ -6,15 +6,20 @@ myApp.controller('TransactionIdControleur', ['$scope', '$route', '$routeParams',
   }
  
 
-  $scope.recupererTransaction = function() {
+  $scope.recuperMontantDu = function() {
   	TransactionId.get({id:$scope.tid},function (transaction, headers) {
 
   		$scope.transaction = transaction;
+      $scope.montantDu = transaction.participants[0].montantDu
+      console.log($scope.montantDu)
                        }, function (error) {
                        });
   }
 
- $scope.recupererTransaction();
+  $scope.payer = function() {
+    console.log("PAYER");
+  }
 
-  $scope.historique = [{texte:'Transaction1', date:'la date'}, {texte:'Transaction1', date:'la date'}];
+  $scope.recuperMontantDu();
+
 }]);
