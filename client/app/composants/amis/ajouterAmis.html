@@ -4,9 +4,10 @@
     <h2>Ajouter un Ami</h2>
 
     <div  class="col-md-6" >
-    	Nom : <input name="inputAmi" ng-model="nomAmi" placeholder="Saisir nouvel ami" required="obligatoire">
-	    <ng-form ng-repeat="n in testtt | filter: nomAmi" id="nameT" >
-	  			<h3> {{n.nom}} : {{n.mel}}</h3> <button type="submit" class= "btn btn-primary"> +</button>
+    	Nom : <input name="inputAmi" ng-model="nomUtilisateur" placeholder="Saisir nouvel ami" required="obligatoire">
+	    <ng-form ng-repeat="utilisateur in utilisateurs | filter: nomUtilisateur" id="nameT" >
+	  			<h3> {{utilisateur.nom}} : {{utilisateur.mel}}</h3> 
+	  			<button type="submit" class= "btn btn-primary" ng-click="ajouterAmi(utilisateur._id)">+</button>
 	  	</ng-form>
 	</div>
 

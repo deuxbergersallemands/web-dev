@@ -23,6 +23,5 @@ myApp.controller('InscriptionControleur', ['$scope', '$route', '$routeParams', '
                     // échec
                 });
     	} 
-    //$location.path("/tableauDeBord")
   };
 }]);
