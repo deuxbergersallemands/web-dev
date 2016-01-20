@@ -1,18 +1,20 @@
-myApp.controller('AjouterGroupesControleur', ['$scope', '$route', '$routeParams', '$location', '$cookies','GroupeNouveau', function($scope, $route, $routeParams, $location, $cookies, GroupeNouveau) {
+myApp.controller('AjouterGroupesControleur', ['$scope', '$route', '$routeParams', '$location', '$cookies','GroupeNouveau', 'Relations', function($scope, $route, $routeParams, $location, $cookies, GroupeNouveau, Relations) {
   
   /**/
     $scope.noms = [];
+    var utilisateur = new Object();
+    utilisateur.nom = $cookies.get('nom');
+    utilisateur.mel = $cookies.get('utilisateur');
+    $scope.noms.push(utilisateur);
 
-  $scope.nomAjouter = "";
-  $scope.ajouterNom = function() {
-    console.log(" ajouterNom()");
-    $scope.noms.push($scope.nomAjouter);
-    $scope.nomAjouter = "";
+
+  $scope.ajouterAmi = function(ami) {
+    console.log(" ajouterAmi(ami)");
+    $scope.noms.push(ami);
   }
 
   $scope.sauvegarder = function() {
     $scope.tousMembres = $scope.noms;
-    $scope.tousMembres.push($cookies.get('utilisateur'));
     $scope.groupe = new GroupeNouveau();
     $scope.groupe.createur = $cookies.get('utilisateur');
 
@@ -26,5 +28,17 @@ myApp.controller('AjouterGroupesControleur', ['$scope', '$route', '$routeParams'
                     // échec
                 });
   }
+
+  $scope.recupererAmis = function() {
+   AmisGroupe.query(function (amisgp, error) {
+     $scope.amisgroupe = amisgp;
+      }, function (error) {
+          console.log("error")
+      });
+  }
+
+   Relations.query(function(amis, headers ) {
+     $scope.amis = amis;
+   });
 /**/
 }]);

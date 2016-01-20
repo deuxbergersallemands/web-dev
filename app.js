@@ -189,9 +189,9 @@ MongoClient.connect(url, function(err, db) {
                })
             });
 
-        app.get('/transaction',function(req,res){
+        app.get('/transaction/nouvelle',function(req,res){
             if(req!=null){
-                var result =Transaction.find("req")
+                var result = Transaction.find("req")
                 if(result!=null){
                     res.result=result;
                     res.send();

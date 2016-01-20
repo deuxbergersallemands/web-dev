@@ -1,23 +1,25 @@
 <div ng-controller="RelationsControleur" class="col-md-6 tableauDeDette">
   <h1>
     Relations
-  </h1>
+  </h1> <br/>
 
-  <button class='btn btn-primary' ng-click="ajouterAmis()"> Ajouter un Ami </button> <br/><br/>
+  <button class='btn btn-primary' ng-click="ajouterAmis()"> Ajouter un Ami </button> 
+  <button class='btn btn-primary' ng-click="ajouterGroupe()"> Ajouter un Groupe </button> <br/><br/>
 
   <div class="col-md-12">
-
+    
     <div class="col-md-6">
+      <p>Mes amis</p>
       <input ng-model="chercheAmi"/>
       <div ng-repeat="ami in amis | filter: chercheAmi">
         <div ng-repeat=" a in ami.amis | filter: chercheAmi" >
-          <h1> {{a.nom}} </h1>
+           {{a.nom}}
         </div>
       </div>
     </div>
 
-
     <div class="col-md-6">
+      <p>Mes groupes d'amis</p>
       <input ng-model="chercheGroupe"/>
       <div ng-repeat="groupe in groupes | filter:chercheGroupe ">
         {{groupe.nom}}
