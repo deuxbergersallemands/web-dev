@@ -268,8 +268,35 @@ MongoClient.connect(url, function(err, db) {
             data.date=dateHistorique;
             Historique.insert(data);
         }
+
+
         
-        app.get('/historique',function(req,res){
+        app.get('/ActivitesRecentes',function(req,res){
+            console.log("ActivitesRecentes");
+            if(req!=null){
+                            console.log("ActivitesRecentes req!=null");
+                var utilisateurEnQuestion=new Object();
+                utilisateurEnQuestion.nom="Netty";
+
+                //var result =Historique.find({"Concernes":[{"nom":"Netty"}]});//.limit(10);
+                console.log(req.cookies.utilisateur);
+
+
+                //Concernes.mel ----> Concernes.mel
+                Historique.find({'Concernes' : req.cookies.utilisateur}).limit(10).toArray( function(err, x) {
+                    if(err==null){
+                    console.log(x);
+                    res.send();
+
+                    }
+                    else 
+                         console.log("reultat introuvable : app.get /ActivitesRecentes' ");
+
+                });
+
+            }
+        });
+        app.get('/historique/',function(req,res){
             if(req!=null){
                 var result =Historique.find("req")
                 if(result!=null){
