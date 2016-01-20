@@ -192,7 +192,11 @@ MongoClient.connect(url, function(err, db) {
             }
         });
 
-        app.get('/groupe',function(req,res){
+        app.get('/groupes',function(req,res){
+            console.log(req.body);
+            res.send();
+            /*
+
             if(req!=null){
                 var result =Groupe.find("req")
                 if(result!=null){
@@ -201,10 +205,12 @@ MongoClient.connect(url, function(err, db) {
                 }
                 else
                     console.log("reultat introuvable : app.get /groupe ")
-            }
+            }*/
         });
     
-        app.post('/groupe/nouvelle', function(req, res) {             
+        app.post('/groupes/nouveau', function(req, res) {   
+            console.log("post /groupes/nouveau")   
+            console.log(req.body) ;      
             Groupe.insert(req.body);
             res.send();
 

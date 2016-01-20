@@ -1,45 +1,30 @@
-myApp.controller('AjouterGroupesControleur', ['$scope', '$route', '$routeParams', '$location', '$cookies', 'Groupes', function($scope, $route, $routeParams, $location, $cookies, Groupes) {
+myApp.controller('AjouterGroupesControleur', ['$scope', '$route', '$routeParams', '$location', '$cookies','GroupeNouveau', function($scope, $route, $routeParams, $location, $cookies, GroupeNouveau) {
+  
+  /**/
+    $scope.noms = [];
 
-
-  $scope.noms;
-
-  $scope.recupererGroupes = function() {
-  	console.log('$scope.recupererGroupes = function() --- appelée !');
-    $scope.groupes = [];
-    $scope.groupes = new Groupes().$query(function (transaction, headers) {
-                   console.log(transaction);
-                        // succès
-                }, function (error) {
-                	console.log("erreur");
-                    // échec
-                });
+  $scope.nomAjouter = "";
+  $scope.ajouterNom = function() {
+    console.log(" ajouterNom()");
+    $scope.noms.push($scope.nomAjouter);
+    $scope.nomAjouter = "";
   }
- 
-  $scope.recupererGroupes();
 
-    $scope.noms = $scope.recupererGroupes();
-
- 
-  $scope.nomGroupe = "";
-  $scope.ajouterGroupe = function() {
-
+  $scope.sauvegarder = function() {
     $scope.tousMembres = $scope.noms;
     $scope.tousMembres.push($cookies.get('utilisateur'));
-    $scope.transaction = new TransactionNouvelle();
-    $scope.transaction.createur = $cookies.get('utilisateur');
-    $scope.transaction.membres = $scope.tousMembres;
-    $scope.transaction.description = $scope.description;
-    $scope.transaction.montant = $scope.montant;
-    $scope.transaction.type = $scope.typeTransaction;
-    $scope.transaction.membreRembourse = $scope.membreRembourse;
-    
-    $scope.transaction.$save(function (transaction, headers) {
+    $scope.groupe = new GroupeNouveau();
+    $scope.groupe.createur = $cookies.get('utilisateur');
+
+
+    $scope.groupe.membres = $scope.tousMembres;
+    $scope.groupe.description = $scope.description;
+    $scope.groupe.$save(function (groupe, headers) {
                     // succès
 
                 }, function (error) {
                     // échec
                 });
-  //	$scope.noms.push($scope.nomGroupe);
-  //	$scope.nomGroupe = "";
   }
+/**/
 }]);
