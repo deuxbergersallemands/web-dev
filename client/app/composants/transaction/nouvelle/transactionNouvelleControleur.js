@@ -1,17 +1,19 @@
-myApp.controller('TransactionNouvelleControleur', ['$scope', '$route', '$routeParams', '$location', '$cookies','TransactionNouvelle', 'Participants', function($scope, $route, $routeParams, $location, $cookies, TransactionNouvelle, Participants) {
-  
-  $scope.noms = [];
 
-  $scope.nomAjouter = "";
-  $scope.ajouterNom = function() {
-  	$scope.noms.push($scope.nomAjouter);
-  	$scope.nomAjouter = "";
+myApp.controller('TransactionNouvelleControleur', ['$scope', '$route', '$routeParams', '$location', '$cookies','TransactionNouvelle', 'Relations', function($scope, $route, $routeParams, $location, $cookies, TransactionNouvelle, Relations) {
+  
+  $scope.participants = [];
+  var utilisateur = new Object();
+  utilisateur.nom = $cookies.get('nom');
+  utilisateur.mel = $cookies.get('utilisateur');
+  $scope.participants.push(utilisateur);
+  
+  $scope.ajouterAmi = function(ami) {
+  	$scope.participants.push(ami);
   }
 
   $scope.sauvegarder = function() {
    
-    $scope.tousParticipants = $scope.noms;
-    $scope.tousParticipants.push($cookies.get('utilisateur'));
+    $scope.tousParticipants = $scope.participants;
 
   	$scope.transaction = new TransactionNouvelle();
     $scope.transaction.createur = $cookies.get('utilisateur');
@@ -29,13 +31,8 @@ myApp.controller('TransactionNouvelleControleur', ['$scope', '$route', '$routePa
                 });
   }
 
+   Relations.query(function(amis, headers ) {
+     $scope.amis = amis;
 
-  $scope.lister = function() {    
-    Participants.query(function (participant, error) {
-               $scope.noms = participant;
-  })}
-
-  $scope.lister();
-
-
+   });
 }]);

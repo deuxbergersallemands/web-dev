@@ -26,7 +26,11 @@ app.set("etag", getETag)
 
 MongoClient.connect(url, function(err, db) {
 
-    db.collection("Utilisateur", function(err, Utilisateur) {
+
+
+    /**************** Collection Historique******************/
+    db.collection("Historique", function(err, Historique) {
+            db.collection("Utilisateur", function(err, Utilisateur) {
            app.use(express.static(__dirname+'/client'));
   
            app.post('/', function(req, res) {
@@ -91,6 +95,13 @@ MongoClient.connect(url, function(err, db) {
                           if (err) res.send(err);
                           if (ami == null) {}
                           else {
+                            var objHistorique= new Object();
+                            console.log(req.body);
+                            objHistorique.Concernes=({nom: ami.nom, mel: ami.mel});
+                            var message="ajout d'un ami pour l'utilisateur  ";
+                            objHistorique.message=message;
+                            saveHistaurique(objHistorique);             
+                            
                             Utilisateur.update({"mel":req.cookies.utilisateur}, 
                                             { $push : 
                                                  { amis: 
@@ -122,7 +133,6 @@ MongoClient.connect(url, function(err, db) {
 
                 Utilisateur.find({'mel' : req.cookies.utilisateur}, {_id:0, amis:1}).toArray(function(err, amis) {
                     if (err) return next(err);
-                  
                     res.send(amis);
                 });
 
@@ -130,14 +140,11 @@ MongoClient.connect(url, function(err, db) {
              
  
             app.get('/solde', function(req, res) {
-              var u=Utilisateur.findOne({'mel':req.cookies.utilisateur}, function(err, solde) {
-                if (err) return err;
-                if (solde == null) {
-
-                }
+              var u=Utilisateur.findOne({'mel':req.cookies.utilisateur}, {'solde':1, 'nom': 1}, function(err, solde) {
+                if (err)  res.send(err);
+                if (solde == null) {}
                 else {
-                    var leSolde = "{\"solde\":" + solde.solde + "}";
-                    res.send(leSolde);
+                    res.send(solde);
                 }
               });
             });
@@ -195,7 +202,15 @@ MongoClient.connect(url, function(err, db) {
         });
     
         app.post('/transaction/nouvelle', function(req, res) { 
-            var dateCreationTransaction= new Date();              
+            var dateCreationTransaction= new Date(); 
+            var objHistorique= new Object();
+            console.log(req.body);
+            objHistorique.Concernes=req.body.participants;
+            var message="ajout de transaction ";
+            message+= req.body.nom;
+            objHistorique.message=message;
+
+             saveHistaurique(objHistorique);             
             Transaction.insert(req.body);
             res.send();
 
@@ -205,6 +220,8 @@ MongoClient.connect(url, function(err, db) {
 /**************** Collection Groupe******************/
     db.collection("Groupe", function(err, Groupe) {
         app.get('/groupe/:id',function(req,res){
+
+           
             if(req!=null){
                 var result =Groupe.findOne("req")
                 if(result!=null){
@@ -234,24 +251,24 @@ MongoClient.connect(url, function(err, db) {
             console.log("post /groupes/nouveau")   
             console.log(req.body) ;      
             Groupe.insert(req.body);
+            var objHistorique= new Object();
+            objHistorique.Concernes=req.body.membres;
+            var message="ajout de groupes ";
+            message+= req.body.nom;
+            objHistorique.message=message;
+
+             saveHistaurique(objHistorique);
             res.send();
         });
     })
+        function saveHistaurique(data){
 
-    /**************** Collection Historique******************/
-    db.collection("Historique", function(err, Historique) {
-        app.get('/historique/:id',function(req,res){
-            if(req!=null){
-                var result =Historique.findOne("req")
-                if(result!=null){
-                    res.result=result;
-                    res.send();
-                }
-                else
-                    console.log("reultat introuvable : app.get /historique/One ")
-            }
-        });
-
+            console.log(data);
+            var dateHistorique = new Date();
+            data.date=dateHistorique;
+            Historique.insert(data);
+        }
+        
         app.get('/historique',function(req,res){
             if(req!=null){
                 var result =Historique.find("req")

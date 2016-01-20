@@ -19,9 +19,12 @@ myApp.controller('TableauDeDetteControleur', ['$scope', '$route', '$routeParams'
   }
 
   $scope.recupererSolde = function() {
-    var solde = Solde.get(function (solde, headers) {
+    Solde.get(function (solde, headers) {
+                       // $cookies.put('nom', solde.nom);
                         $scope.solde = solde.solde;
+                        $cookies.put('nom', solde.nom)
                        }, function (error) {
+                        console.log(error);
                         // échec
                        });
   }
@@ -31,12 +34,10 @@ myApp.controller('TableauDeDetteControleur', ['$scope', '$route', '$routeParams'
 
   $scope.ajouterTransaction = function() {
   	$location.path("/transaction/nouvelle");
-
   }
 
   $scope.dirigerVers = function(chemin) {
     console.log("chemin: " + chemin);
-    $location.path('/transaction/' + chemin);
   }
 
 }]);
