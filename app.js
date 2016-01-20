@@ -53,12 +53,12 @@ MongoClient.connect(url, function(err, db) {
             });
 
             app.post('/inscription', function(req, res) {
-                console.log(req.body);
                 var melReq=req.body.mel;
                 var NouveauUtilisateur= Utilisateur.findOne({"mel":melReq}, function(err, u) {
                   if (err) return err;
                   if (u==null){
                     UtilisateurAAjouter=req.body;
+                    UtilisateurAAjouter.solde = 0;
                     Utilisateur.insert(UtilisateurAAjouter);
                     res.send();
                   }
@@ -73,7 +73,6 @@ MongoClient.connect(url, function(err, db) {
 
 
             app.get('/amis', function(req, res) {
-                console.log("hehe");
                 Utilisateur.find({}).toArray(function(err, amis) {
                     if (err) return next(err);
                   
@@ -83,7 +82,6 @@ MongoClient.connect(url, function(err, db) {
 
 
             app.post('/amis',function(req,res){
-                 console.log("hiiiiit")
                  Utilisateur.findOne({"mel":req.cookies.utilisateur}, function(err, utilisateur) {
                     if (err) return err;
                     if (utilisateur == null) {}
