@@ -13,6 +13,7 @@ myApp.controller('InscriptionControleur', ['$scope', '$route', '$routeParams', '
           $scope.inscription.mel = $scope.mel;
           $scope.inscription.motDePasse = $scope.motDePasse;
           $scope.inscription.nom = $scope.nom;
+          $scope.inscription.solde = 0;
 
           $scope.inscription.$save(function (utilisateur, headers) {
 

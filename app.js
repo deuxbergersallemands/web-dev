@@ -49,6 +49,7 @@ MongoClient.connect(url, function(err, db) {
                 var MotDePasseReq=req.body.motDePasse;
                 var u=Utilisateur.findOne({"mel":melReq}, function(err, u) {
                     if (err) res.send(err);
+
                     else {
                         if((u.mel==melReq)&&(u.MotDePasse==MotDePasseReq)){
                             res.send(u.solde);
@@ -154,8 +155,9 @@ MongoClient.connect(url, function(err, db) {
             app.get('/solde', function(req, res) {
               var u=Utilisateur.findOne({'mel':req.cookies.utilisateur}, {'solde':1, 'nom': 1}, function(err, solde) {
                 if (err)  res.send(err);
-                if (solde == null) {}
                 else {
+                    console.log("Solde à retourner: " + solde);
+
                     res.send(solde);
                 }
               });
@@ -201,15 +203,26 @@ MongoClient.connect(url, function(err, db) {
                         })
                       }
                      }
-
-                     var unMontant;
+                     console.log("icicicici");
                      db.collection("Utilisateur", function(err, Utilisateur) {
                       Utilisateur.findOne({"mel": req.cookies.utilisateur}, function(err, utilisateur){
-                        unMontant = utilisateur.solde;
-                      })
-                      Utilisateur.update({"mel": req.cookies.utilisateur}, {
-                          $set: {"solde": unMontant + unDu}
+                         if (err) {
+                          console.log("NE MARCHE PASSSSS");
+                          res.send(err);
+                         }
+                         else {
+                           console.log("Utlisateur trouvé: " + utilisateur.mel + " " + utilisateur.solde );
+                           console.log("unDu: " + unDu);
+                           var unMontant = utilisateur.solde;
+                           console.log(unMontant + " est le solde actuel")
+
+                            var soldeNouveau = unMontant + unDu;
+                               console.log(unMontant + unDu + " est le solde on veut metter")
+                          Utilisateur.update({"mel": req.cookies.utilisateur}, {
+                          $set: {"solde": soldeNouveau}
                         })
+                         }
+                      });
                      })
 
                     res.send();

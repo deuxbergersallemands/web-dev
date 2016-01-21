@@ -10,7 +10,7 @@ myApp.controller('TransactionNouvelleControleur', ['$scope', '$route', '$routePa
   utilisateur.statut= "Ouverte";
   utilisateur.montantRegle = 0;
   $scope.participants.push(utilisateur);
-
+  console.log("Utilisateur: " + utilisateur)
   
   $scope.ajouterAmi = function(ami) {
     var amiAjouter = new Object();
@@ -27,7 +27,6 @@ myApp.controller('TransactionNouvelleControleur', ['$scope', '$route', '$routePa
    
   	$scope.transaction = new TransactionNouvelle();
     $scope.transaction.createur = $cookies.get('utilisateur');
-    console.log($cookies.get('utilisateur'))
     $scope.transaction.participants = $scope.participants;
     $scope.transaction.description = $scope.description;
     $scope.transaction.montant = $scope.montant;
