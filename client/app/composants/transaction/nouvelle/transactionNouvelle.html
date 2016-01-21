@@ -30,8 +30,9 @@
   		<br/><br/>
   		 Payé par:
   		<select ng-model="participantRembourse">
-	      <option ng-repeat="part in participants">{{part.participant.mel}} </option>
+	      <option ng-repeat="part in participants">{{part.participant.mel}}</option>
 	    </select>
+      {{particpiantRembourse|json}}
       <br/><br/>
   		<br/><br/>
   		<label for="SelectTypeTransac"> Sélectionner le type de transaction: </label> <br/>
