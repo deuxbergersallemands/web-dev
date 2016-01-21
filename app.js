@@ -168,40 +168,26 @@ MongoClient.connect(url, function(err, db) {
             });
             
             app.get('/tableauDeBord', function(req, res) {
-                console.log("dkdkdkdkdkdk");
-                var users=Transaction.find({'debiteur.mel' : req.cookies.utilisateur}).toArray( function(err, users) {
+                var users=Transaction.find({'preteur.mel' : req.cookies.utilisateur}).toArray( function(err, trans) {
                     if (err) return next(err)
-                    if (users == null)
+                    if (trans == null)
                       res.status(404).end()
                     else{
-                      res.send(users);
+                      res.send(trans);
                     }
                })
             });
 
             app.get('/tableauDeBord/Transactions/Participant', function(req, res) {
-                console.log("chemin long")
-                var users=Transaction.find({'participants.participant.mel' : req.cookies.utilisateur}).toArray( function(err, users) {
-                    if (err) return res.send(err);
-                    if (users == null)
+                var users=Transaction.find({'participants.participant.mel' : req.cookies.utilisateur}).toArray( function(err, trans) {
+                    if (err) res.send(err);
+                    if (trans == null)
                       res.status(404).end()
                     else{
-                      res.send(users);
+                      res.send(trans);
                     }
                })
             });
-
-        app.get('/transaction/nouvelle',function(req,res){
-            if(req!=null){
-                var result = Transaction.find("req")
-                if(result!=null){
-                    res.result=result;
-                    res.send();
-                }
-                else
-                    console.log("reultat introuvable : app.get /transaction ")
-            }
-        });
     
         app.post('/transaction/nouvelle', function(req, res) { 
             var dateCreationTransaction= new Date(); 
@@ -251,8 +237,6 @@ MongoClient.connect(url, function(err, db) {
     })
     
         app.post('/groupes/nouveau', function(req, res) {   
-            console.log("post /groupes/nouveau")   
-            console.log(req.body) ;      
             Groupe.insert(req.body);
             var objHistorique= new Object();
             objHistorique.Concernes=req.body.membres;
@@ -274,7 +258,7 @@ MongoClient.connect(url, function(err, db) {
 
         
         app.get('/ActivitesRecentes',function(req,res){
-            console.log("ActivitesRecentes");
+            if (err) res.send(err);
             if(req!=null){
                 console.log("ActivitesRecentes req!=null");
                 //var result =Historique.find({"Concernes":[{"nom":"Netty"}]});//.limit(10);
@@ -293,9 +277,7 @@ MongoClient.connect(url, function(err, db) {
             }
         });
         app.get('/historique',function(req,res){
-                       console.log("/historique");
             if(req!=null){
-                console.log("historique req!=null");
                 //var result =Historique.find({"Concernes":[{"nom":"Netty"}]});//.limit(10);
                 console.log(req.cookies.utilisateur);
                 //Concernes ----> Concernes.mel si votre objet personne et pas seulement l'email 
@@ -311,12 +293,7 @@ MongoClient.connect(url, function(err, db) {
                 });
 
             } 
-        });
-    
-        app.post('/historique/nouvelle', function(req, res) {             
-            Historique.insert(req.body);
-            res.send();
-        });        
+        });      
     })
 
     /**************///
