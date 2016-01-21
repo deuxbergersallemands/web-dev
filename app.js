@@ -96,7 +96,6 @@ MongoClient.connect(url, function(err, db) {
                           if (ami == null) {}
                           else {
                             var objHistorique= new Object();
-                            console.log(req.body);
                             objHistorique.Concernes=({nom: ami.nom, mel: ami.mel});
                             var message="ajout d'un ami pour l'utilisateur  ";
                             objHistorique.message=message;
@@ -167,16 +166,29 @@ MongoClient.connect(url, function(err, db) {
                 });
             });
 
-
-            app.post('/transaction/:id',function(req,res){
-                var idTrans = new require('mongodb').ObjectID(req.params.id)
+            app.post('/transaction',function(req,res){
+                var test = new require('mongodb').ObjectID(req.body.transId);
                  Transaction.findOne({'_id' : test}, function(err, transaction) {
                    if (err) return err;
                    if (transaction == null) {
                      console.log("n'existe passss");
                    }
                    else {
-                    console.log("transaction trouvééééééééééé");
+                    console.log("else")
+                     var obj = transaction.participants;
+                var utilisateur = req.cookies.utilisateur;
+                     for (var i = 0; i < obj.length; i++)
+                     {
+                      if (obj[i].participant.mel == utilisateur) {
+                        console.log("pre")
+                        Transaction.update({'_id' : test, 'participants.participant.mel' : utilisateur}, {
+                          $set: {"participants.$.statut": "Reglée", "participants.$.montantRegle": obj[i].montantDu}
+                        })
+                        console.log("post");
+
+                      }
+                     }
+
                     res.send();
                     //res.send(transaction);
                    }

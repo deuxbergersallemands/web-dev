@@ -7,6 +7,7 @@ myApp.controller('TransactionNouvelleControleur', ['$scope', '$route', '$routePa
   utilisateur.participant = new Object();
   utilisateur.participant.nom = $cookies.get('nom');
   utilisateur.participant.mel = $cookies.get('utilisateur');
+  utilisateur.statut= "Ouverte";
   utilisateur.montantRegle = 0;
   $scope.participants.push(utilisateur);
 

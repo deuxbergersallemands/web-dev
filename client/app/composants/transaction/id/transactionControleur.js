@@ -17,14 +17,17 @@ myApp.controller('TransactionIdControleur', ['$scope', '$route', '$routeParams',
   }
 
   $scope.payer = function() {
-   console.log("payer")
-   TransactionId.post({id:$scope.tid},function (transaction, headers) {
+    console.log("payer");
+    var trans = new TransactionId();
+    trans.transId = $scope.tid;
 
-      console.log("qsdmlfkjqmsdlfjqsmdlfkjqmsdlfjmqsdlkjfmqsdljf SUCCCESSS");
+     trans.$save({function (transaction, headers) {
+
+        console.log("qsdmlfkjqmsdlfjqsmdlfkjqmsdlfjmqsdlkjfmqsdljf SUCCCESSS");
 
       //$location.path('/tableauDeBord');
-      })
-  }
+     }
+    })};
 
   $scope.recuperMontantDu();
 
