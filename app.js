@@ -212,7 +212,7 @@ MongoClient.connect(url, function(err, db) {
                             var concerne=new Object();
                             var data=new Object();
                             Concernes=req.body.participants;
-                            message+= Concernes.concerne;
+                            //message+= Concernes.concerne;
                             data=Transaction.findOne({'_id' : test, 'participants.participant.mel' : utilisateur});
                             console.log(message);
                             console.log(data);

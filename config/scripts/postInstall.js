@@ -71,8 +71,8 @@ db.createCollection( "Groupe");
 //db.accounts.createIndex( { "nom": 1 }, { unique: true }    );
 db.Groupe.insert(
    {
-      "nom":"ski",
-      "UtilisateurCreateur":{"nom":"saber","mel":"frejsaber@yahoo.fr"}, 
+      "NomGroupe":"ski",
+      "createur":{"nom":"saber","mel":"frejsaber@yahoo.fr"}, 
       "description":"voyage scolaire au Mont-blanc",
       "membres":[
          {"nom":"tristan","mel":"tristan@gmail.com"},
@@ -94,34 +94,20 @@ db.Historique.insert({"date":dateHistorique,"texte":"Saber à ajouter tristan à
 db.Historique.insert({"date":dateHistorique,"texte":"Saber à ajouter seif à l'evenement ski"}
    );
 
-db.createCollection("Transaction"
-   /*,{
-      validator: { $or:
-         [
-            { 
-               type: { $in: [ "Equitable", "Exact" ] },
-               statut: { $in: [ "Ouverte", "Fermée","Annulée","Arrongée" ] }
-            }
-         ]
-      }
-   }*/
-
-);
-
+db.createCollection("Transaction");
 var dateCreationTransaction = new Date();
 db.Transaction.insert({
-   "UtilisateurCreateur":{"nom":"saber","mel":"frejsaber@yahoo.fr"},
-   "Groupe":{"nom":"ski"},
+   "createur":{"nom":"saber","mel":"frejsaber@yahoo.fr"},
+   "Groupe":{"NomGroupe":"ski"},
    "description":"Assiettes Savoyardes",
    "type":"Equitable",
    "MontantTotal":42.60,
    "DateCreation":dateCreationTransaction,
    "participants":[
-      {"participant":{"nom":"tristan","mel":"tristan@gmail.com"},"montantDu":14.6,"montantReglé":0},
-      {"participant":{"nom":"netty","mel":"netty@gmail.com"},"montantDu":14.6,"montantReglé":0},
-      {"participant":{"nom":"seif","mel":"seifeddinefraj@live.fr"},"montantDu":14.6,"montantReglé":0}
+      {"participant":{"nom":"tristan","mel":"tristan@gmail.com"},"montantDu":14.6,"montantRegle":0, "statut": "Ouverte"},
+      {"participant":{"nom":"netty","mel":"netty@gmail.com"},"montantDu":14.6,"montantRegle":0, "statut": "Ouverte"},
+      {"participant":{"nom":"seif","mel":"seifeddinefraj@live.fr"},"montantDu":14.6,"montantRegle":0, "statut": "Ouverte"}
    ],
-   "statut":"Ouverte",
    "DateDeFermeture":null,
    "preteur":{"nom":"netty","mel":"netty@gmail.com"}
 }
@@ -130,8 +116,8 @@ db.Transaction.insert({
 var dateCreationTransaction = new Date();
 var dateArrangement = new Date();
 db.Transaction.insert({
-   "UtilisateurCreateur":{"nom":"tristan","mel":"tristan@gmail.com"},
-   "Groupe":{"nom":"ski"},
+   "createur":{"nom":"tristan","mel":"tristan@gmail.com"},
+   "Groupe":{"NomGroupe":"ski"},
    "description":"Fondue savoyarde",
    "type":"Equitable",
    "MontantTotal":100,
@@ -140,22 +126,26 @@ db.Transaction.insert({
       {
          "participant":{"nom":"tristan","mel":"tristan@gmail.com"},
          "montantDu":25,
-         "montantReglé":25
+         "montantRegle":25,
+         "statut": "Ouverte"
       },
       {
          "participant":{"nom":"netty","mel":"netty@gmail.com"},
          "montantDu":25,
-         "montantReglé":0
+         "montantRegle":0,
+         "statut": "Ouverte"
       },
       {
          "participant":{"nom":"seif","mel":"seifeddinefraj@live.fr"},
          "montantDu":25,
-         "montantReglé":0
+         "montantRegle":0,
+         "statut": "Ouverte"
       },
       {
          "participant":{"nom":"saber","mel":"frejsaber@yahoo.fr"},
          "montantDu":25,
-         "montantReglé":15
+         "montantRegle":15,
+         "statut": "Ouverte"
       }
    ],
    "statut":"Equitable",
