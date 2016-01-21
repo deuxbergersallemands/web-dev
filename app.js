@@ -176,11 +176,15 @@ MongoClient.connect(url, function(err, db) {
                    else {
                     console.log("else")
                      var obj = transaction.participants;
-                var utilisateur = req.cookies.utilisateur;
+                     var utilisateur = req.cookies.utilisateur;
+                     var du = 0
                      for (var i = 0; i < obj.length; i++)
                      {
                       if (obj[i].participant.mel == utilisateur) {
                         console.log("pre")
+                        Transaction.findOne({"mel": req.cookies.utilisateur}, function(err, transaction){
+                        du = transaction.participant.montantDu;
+                        })
                         Transaction.update({'_id' : test, 'participants.participant.mel' : utilisateur}, {
                           $set: {"participants.$.statut": "Reglée", "participants.$.montantRegle": obj[i].montantDu}
                         })
@@ -188,6 +192,17 @@ MongoClient.connect(url, function(err, db) {
 
                       }
                      }
+                     var unMontant = 0;
+                     db.collection("Utilisateur", function(err, Utilisateur) {
+                      Utilisateur.findOne({"mel": req.cookies.utilisateur}, function(err, utilisateur){
+                        unMontant = utilisateur.solde;
+                      })
+                      Utilisateur.update({"mel": req.cookies.utilisateur}, {
+                          $set: {"solde": unMontant}
+                        })
+                      console.log("ooooooooooooo: "+ unMontant)
+
+                     })
 
                     res.send();
                     //res.send(transaction);

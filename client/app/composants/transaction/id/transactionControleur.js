@@ -22,10 +22,7 @@ myApp.controller('TransactionIdControleur', ['$scope', '$route', '$routeParams',
     trans.transId = $scope.tid;
 
      trans.$save({function (transaction, headers) {
-
-        console.log("qsdmlfkjqmsdlfjqsmdlfkjqmsdlfjmqsdlkjfmqsdljf SUCCCESSS");
-
-      //$location.path('/tableauDeBord');
+          $location.path('/tableauDeBord');
      }
     })};
 
