@@ -21,7 +21,7 @@
   		En Attente
   	</h3>
     <div class='transaction' ng-repeat="transaction in transactionsDebiteur">
-      <div  ng-repeat="participant in transaction.participants" ng-if="participant.participant.mel != mel"> 
+      <div  ng-repeat="participant in transaction.participants" ng-if="participant.participant.mel != mel && participant.statut != 'Reglée'"> 
         {{participant.participant.nom}} vous doit {{participant.montantDu}}
       </div>
     </div>
