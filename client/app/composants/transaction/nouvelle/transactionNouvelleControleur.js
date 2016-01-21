@@ -18,6 +18,7 @@ myApp.controller('TransactionNouvelleControleur', ['$scope', '$route', '$routePa
     amiAjouter.participant.nom = ami.nom;
     amiAjouter.participant.mel = ami.mel;
     amiAjouter.montantRegle = 0;
+    amiAjouter.statut= "Ouverte";
   	$scope.participants.push(amiAjouter);
   }
 
