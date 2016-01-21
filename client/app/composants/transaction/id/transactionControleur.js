@@ -25,6 +25,7 @@ myApp.controller('TransactionIdControleur', ['$scope', '$route', '$routeParams',
       $scope.montantDu = 0
       transaction.participants[0].solde = $scope.transaction.montantPaye;
     
+    })
   }
 
   $scope.recuperMontantDu();

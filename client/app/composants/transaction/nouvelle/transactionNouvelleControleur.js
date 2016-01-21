@@ -29,7 +29,8 @@ myApp.controller('TransactionNouvelleControleur', ['$scope', '$route', '$routePa
     $scope.transaction.description = $scope.description;
     $scope.transaction.montant = $scope.montant;
     $scope.transaction.type = $scope.typeTransaction;
-    $scope.transaction.participantRembourse = $scope.participantRembourse;
+    $scope.transaction.preteur = new Object();
+    $scope.transaction.preteur.mel = $scope.participantRembourse;
 
     var aPayer = $scope.montant / $scope.participants.length;
     
@@ -39,11 +40,8 @@ myApp.controller('TransactionNouvelleControleur', ['$scope', '$route', '$routePa
         $scope.transaction.participants[i].montantDu = aPayer;
       }
     }
-    
-
-    
     $scope.transaction.$save(function (transaction, headers) {
-                    // succès
+         $location.path('/tableauDeBord');
 
                 }, function (error) {
                     // échec
