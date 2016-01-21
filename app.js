@@ -177,14 +177,13 @@ MongoClient.connect(url, function(err, db) {
                     console.log("else")
                      var obj = transaction.participants;
                      var utilisateur = req.cookies.utilisateur;
-                     var du = 0
+                     var unDu = 0
                      for (var i = 0; i < obj.length; i++)
                      {
                       if (obj[i].participant.mel == utilisateur) {
                         console.log("pre")
-                        Transaction.findOne({"mel": req.cookies.utilisateur}, function(err, transaction){
-                        du = transaction.participant.montantDu;
-                        })
+                         unDu = obj[i].montantDu;
+                        console.log("************* du: "+ unDu)
                         Transaction.update({'_id' : test, 'participants.participant.mel' : utilisateur}, {
                           $set: {"participants.$.statut": "Reglée", "participants.$.montantRegle": obj[i].montantDu}
                         })
@@ -192,13 +191,13 @@ MongoClient.connect(url, function(err, db) {
 
                       }
                      }
-                     var unMontant = 0;
+                     var unMontant;
                      db.collection("Utilisateur", function(err, Utilisateur) {
                       Utilisateur.findOne({"mel": req.cookies.utilisateur}, function(err, utilisateur){
                         unMontant = utilisateur.solde;
                       })
                       Utilisateur.update({"mel": req.cookies.utilisateur}, {
-                          $set: {"solde": unMontant}
+                          $set: {"solde": unMontant + unDu}
                         })
                       console.log("ooooooooooooo: "+ unMontant)
 
@@ -249,6 +248,16 @@ MongoClient.connect(url, function(err, db) {
             res.send();
 
         });
+
+
+
+          app.get('/transaction/nouvelle', function(req, res) { 
+            Transaction.find({'preteur.mel' : req.cookies.utilisateur, 'participants.statut': "Ouverte"}).toArray( function(err, trans) {
+            res.send(trans);
+
+            }); 
+          })
+
     });
 
 /**************** Collection Groupe******************/
@@ -311,7 +320,7 @@ MongoClient.connect(url, function(err, db) {
 
 
                 //Concernes ----> Concernes.mel si votre objet personne et pas seulement l'email 
-                Historique.find({'Concernes' : req.cookies.utilisateur}).toArray( function(err, x) {
+                Historique.find({'Concernes.participant.mel' : req.cookies.utilisateur}).limit(10).toArray( function(err, x) {
                     if(err==null){
                     console.log(x);
                     res.send(x);
@@ -326,7 +335,7 @@ MongoClient.connect(url, function(err, db) {
                 //var result =Historique.find({"Concernes":[{"nom":"Netty"}]});//.limit(10);
                 console.log(req.cookies.utilisateur);
                 //Concernes ----> Concernes.mel si votre objet personne et pas seulement l'email 
-                Historique.find({'Concernes' : req.cookies.utilisateur}).limit(10).toArray( function(err, x) {
+                Historique.find({'Concernes.participant.mel' : req.cookies.utilisateur}).toArray( function(err, x) {
                     if(err==null){
                     console.log(x);
                     res.send(x);
