@@ -63,6 +63,18 @@ MongoClient.connect(url, function(err, db) {
                   if (u==null){
                     UtilisateurAAjouter=req.body;
                     UtilisateurAAjouter.solde = 0;
+                            var message="inscription ";
+                            var Concernes=new Array();
+                            var concerne=new Object();
+                            var data=new Object();
+                            concerne.mel=UtilisateurAAjouter.mel;
+                            concerne.nom=UtilisateurAAjouter.nom;
+                            Concernes.push(concerne);
+                            message+= Concernes.concerne;
+                            data.Concernes=concerne;
+                            console.log(message);
+                            console.log(data);
+                            saveHistaurique(message,Concernes,data); 
                     Utilisateur.insert(UtilisateurAAjouter);
                     res.send();
                   }
@@ -98,7 +110,20 @@ MongoClient.connect(url, function(err, db) {
                             var objHistorique= new Object();
                             objHistorique.Concernes=({nom: ami.nom, mel: ami.mel});
                             var message="ajout d'un ami pour l'utilisateur  ";
+                            var Concernes=new Array();
+                            var concerne=new Object();
+                            var data=new Object();
+                            console.log(req.cookies.utilisateur);
+                            concerne.mel=req.cookies.utilisateur;
+                            Concernes.push(concerne);
+
+                            message+= Concernes.concerne;
+                            data.Concernes=concerne;
+                            console.log(message);
+                            console.log(data);
+                            saveHistaurique(message,Concernes,data); 
                             objHistorique.message=message;
+                            saveHistaurique(message,Concernes,data);
                             saveHistaurique(objHistorique);             
                             
                             Utilisateur.update({"mel":req.cookies.utilisateur}, 
@@ -181,6 +206,17 @@ MongoClient.connect(url, function(err, db) {
                      for (var i = 0; i < obj.length; i++)
                      {
                       if (obj[i].participant.mel == utilisateur) {
+
+                            var message="modification de transaction  ";
+                            var Concernes=new Array();
+                            var concerne=new Object();
+                            var data=new Object();
+                            Concernes=req.body.participants;
+                            message+= Concernes.concerne;
+                            data=Transaction.findOne({'_id' : test, 'participants.participant.mel' : utilisateur});
+                            console.log(message);
+                            console.log(data);
+
                         console.log("pre")
                          unDu = obj[i].montantDu;
                         console.log("************* du: "+ unDu)
@@ -234,16 +270,16 @@ MongoClient.connect(url, function(err, db) {
             });
     
         app.post('/transaction/nouvelle', function(req, res) { 
-            var dateCreationTransaction= new Date(); 
-            var objHistorique= new Object();
-        
 
-            objHistorique.Concernes=req.body.participants;
             var message="ajout de transaction ";
+            var Concernes=new Object();
+            var data = new Object();
+            data =req.body;
+            Concernes=req.body.participants;
             message+= req.cookies.nom;
-            objHistorique.message=message;
+            saveHistaurique(message,Concernes,data); 
 
-            saveHistaurique(objHistorique);             
+
             Transaction.insert(req.body);
             res.send();
 
@@ -292,21 +328,29 @@ MongoClient.connect(url, function(err, db) {
     
         app.post('/groupes/nouveau', function(req, res) {   
             Groupe.insert(req.body);
-            var objHistorique= new Object();
-            objHistorique.Concernes=req.body.membres;
+            var Concernes=new Object();
+            var data= new Object();
+            Concernes=req.body.membres;
+            data=req.body;
             var message="ajout de groupes ";
             message+= req.body.nom;
-            objHistorique.message=message;
-
-             saveHistaurique(objHistorique);
+            saveHistaurique(message,Concernes,data);
             res.send();
         });
     })
-        function saveHistaurique(data){
+        function saveHistaurique(msg,Concernes,d){
 
-            var dateHistorique = new Date();
-            data.date=dateHistorique;
-            Historique.insert(data);
+          var dateHistorique = new Date();
+          var data=new Object()
+          data.date=dateHistorique;          
+          data.date=dateHistorique;
+          data.Concernes=Concernes;
+          data.data=d;
+          data.message=msg;
+
+          console.log("Enregistrement de l'historique suivante :");
+          console.log(data);
+          Historique.insert(data);
         }
 
 
