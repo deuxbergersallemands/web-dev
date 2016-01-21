@@ -30,10 +30,24 @@ MongoClient.connect(url, function(err, db) {
 
     /**************** Collection Historique******************/
     db.collection("Historique", function(err, Historique) {
-            db.collection("Utilisateur", function(err, Utilisateur) {
-           app.use(express.static(__dirname+'/client'));
-  
-           app.post('/', function(req, res) {
+
+        function saveHistaurique(msg,Concernes,d){
+          console.log("  function saveHistaurique(msg,Concernes,d)")
+
+          var dateHistorique = new Date();
+          var data=new Object()
+          data.date=dateHistorique;          
+          data.date=dateHistorique;
+          data.Concernes=Concernes;
+          data.d=d;
+          data.message=msg;
+          console.log("data");
+          console.log(data);
+          Historique.insert(data);
+        }
+        db.collection("Utilisateur", function(err, Utilisateur) {
+          app.use(express.static(__dirname+'/client'));
+            app.post('/', function(req, res) {
                 var melReq=req.body.mel;
                 var MotDePasseReq=req.body.motDePasse;
                 var u=Utilisateur.findOne({"mel":melReq}, function(err, u) {
@@ -83,10 +97,7 @@ MongoClient.connect(url, function(err, db) {
                     res.status(500).send({ error: "utilisateur existe déja" });
                   }
                 });
-
             });
-
-
 
             app.get('/amis', function(req, res) {
                 Utilisateur.find({}).toArray(function(err, amis) {
@@ -95,7 +106,6 @@ MongoClient.connect(url, function(err, db) {
                     res.send(amis);
                 });
             });
-
 
             app.post('/amis',function(req,res){
                  Utilisateur.findOne({"mel":req.cookies.utilisateur}, function(err, utilisateur) {
@@ -121,10 +131,8 @@ MongoClient.connect(url, function(err, db) {
                             data.Concernes=concerne;
                             console.log(message);
                             console.log(data);
-                            saveHistaurique(message,Concernes,data); 
-                            objHistorique.message=message;
                             saveHistaurique(message,Concernes,data);
-                            saveHistaurique(objHistorique);             
+            
                             
                             Utilisateur.update({"mel":req.cookies.utilisateur}, 
                                             { $push : 
@@ -138,7 +146,6 @@ MongoClient.connect(url, function(err, db) {
 
                  });
             });
-
             
             app.get('/amis/:id',function(req,res){
                 var ami = new require('mongodb').ObjectID(req.params.id)
@@ -159,9 +166,7 @@ MongoClient.connect(url, function(err, db) {
                     if (err) return next(err);
                     res.send(amis);
                 });
-
             });
-             
  
             app.get('/solde', function(req, res) {
               var u=Utilisateur.findOne({'mel':req.cookies.utilisateur}, {'solde':1, 'nom': 1}, function(err, solde) {
@@ -174,7 +179,6 @@ MongoClient.connect(url, function(err, db) {
             });
 
         });
-
 
         /**************** Collection Transaction******************/
         db.collection("Transaction", function(err, Transaction) {
@@ -246,8 +250,6 @@ MongoClient.connect(url, function(err, db) {
                 });
             });
 
-
-            
             app.get('/tableauDeBord', function(req, res) {
                 var users=Transaction.find({'preteur.mel' : req.cookies.utilisateur, 'participants.statut': "Ouverte"}).toArray( function(err, trans) {
                     if (err) return next(err)
@@ -313,8 +315,6 @@ MongoClient.connect(url, function(err, db) {
             }
         });
 
-      
- 
         // Récupérer tous les groups dont l'utilisateur fait parti.
         app.get('/groupes',function(req,res){
             Groupe.find({'membres.mel' : req.cookies.utilisateur}).toArray( function(err, groupes) {
@@ -339,24 +339,8 @@ MongoClient.connect(url, function(err, db) {
             res.send();
         });
     })
-        function saveHistaurique(msg,Concernes,d){
-
-          var dateHistorique = new Date();
-          var data=new Object()
-          data.date=dateHistorique;          
-          data.date=dateHistorique;
-          data.Concernes=Concernes;
-          data.data=d;
-          data.message=msg;
-
-          console.log("Enregistrement de l'historique suivante :");
-          console.log(data);
-          Historique.insert(data);
-        }
-
-
         
-        app.get('/ActivitesRecentes',function(req,res){
+    app.get('/ActivitesRecentes',function(req,res){
             if (err) res.send(err);
             if(req!=null){
                 console.log("ActivitesRecentes req!=null");
@@ -375,7 +359,7 @@ MongoClient.connect(url, function(err, db) {
                 });
             }
         });
-        app.get('/historique',function(req,res){
+    app.get('/historique',function(req,res){
             if(req!=null){
                 //var result =Historique.find({"Concernes":[{"nom":"Netty"}]});//.limit(10);
                 console.log(req.cookies.utilisateur);
