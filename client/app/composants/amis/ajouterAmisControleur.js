@@ -1,8 +1,8 @@
 myApp.controller('AjouterAmisControleur', ['$scope', '$route', '$routeParams', '$location', '$cookies', 'Amis', 'AmiNouveau', function($scope, $route, $routeParams, $location, $cookies, Amis, AmiNouveau) {
 
   $scope.recupererAmis = function() {
-    Amis.query(function (transaction, error) {
-     $scope.utilisateurs = transaction;
+    Amis.query(function (amis, error) {
+     $scope.utilisateurs = amis;
           // succès
       }, function (error) {
           // échec
