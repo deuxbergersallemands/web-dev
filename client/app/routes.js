@@ -25,7 +25,7 @@ myApp.config(function ($routeProvider, $locationProvider) {
 		templateUrl: 'app/composants/amis/amis.html',
 	  })	  
 	  .when('/groupes', {
-		templateUrl: 'app/composants/groupes/ajouterGroupes.html',
+		templateUrl: 'app/composants/groupes/groupes.html',
 	  })	  
 	  
 	  .otherwise({ redirectTo: '/'});

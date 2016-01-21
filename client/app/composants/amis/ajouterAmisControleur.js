@@ -13,7 +13,7 @@ myApp.controller('AjouterAmisControleur', ['$scope', '$route', '$routeParams', '
     $scope.amiNouveau = new Amis();
     $scope.amiNouveau.id = id;
     $scope.amiNouveau.$save(function(ami, etc) {
-      console.log("addddd");
+      $location.path('/relations');
     }, function(error) {
       console.log("errrr");
     });

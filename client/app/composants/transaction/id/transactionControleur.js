@@ -18,14 +18,12 @@ myApp.controller('TransactionIdControleur', ['$scope', '$route', '$routeParams',
 
   $scope.payer = function() {
    console.log("payer")
-   TransactionId.get({id:$scope.tid},function (transaction, headers) {
+   TransactionId.post({id:$scope.tid},function (transaction, headers) {
 
-      $scope.montantDu = transaction.participants[0].montantDu
-      $scope.montantPaye = $scope.montantDu;
-      $scope.montantDu = 0
-      transaction.participants[0].solde = $scope.transaction.montantPaye;
-    
-    })
+      console.log("qsdmlfkjqmsdlfjqsmdlfkjqmsdlfjmqsdlkjfmqsdljf SUCCCESSS");
+
+      //$location.path('/tableauDeBord');
+      })
   }
 
   $scope.recuperMontantDu();

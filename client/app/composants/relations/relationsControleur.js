@@ -7,8 +7,9 @@ myApp.controller('RelationsControleur', ['$scope', '$route', '$routeParams', '$l
   })}
 
   $scope.recupererGroupes = function() {    
-    var relation = Groupes.query(function (relation, error) {
-               $scope.groupes = relation;
+    Groupes.query(function (groupe, error) {
+               $scope.groupes = groupe;
+               console.log(groupe)
   })}
 
   $scope.recupererAmis();

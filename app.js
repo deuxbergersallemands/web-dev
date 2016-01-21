@@ -166,6 +166,24 @@ MongoClient.connect(url, function(err, db) {
                    }
                 });
             });
+
+
+            app.post('/transaction/:id',function(req,res){
+                var idTrans = new require('mongodb').ObjectID(req.params.id)
+                 Transaction.findOne({'_id' : test}, function(err, transaction) {
+                   if (err) return err;
+                   if (transaction == null) {
+                     console.log("n'existe passss");
+                   }
+                   else {
+                    console.log("transaction trouvééééééééééé");
+                    res.send();
+                    //res.send(transaction);
+                   }
+                });
+            });
+
+
             
             app.get('/tableauDeBord', function(req, res) {
                 var users=Transaction.find({'preteur.mel' : req.cookies.utilisateur}).toArray( function(err, trans) {

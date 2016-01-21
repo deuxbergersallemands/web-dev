@@ -17,13 +17,12 @@ myApp.controller('AjouterGroupesControleur', ['$scope', '$route', '$routeParams'
     $scope.tousMembres = $scope.noms;
     $scope.groupe = new GroupeNouveau();
     $scope.groupe.createur = $cookies.get('utilisateur');
-
-
+    $scope.groupe.NomGroupe = $scope.NomGroupe;
     $scope.groupe.membres = $scope.tousMembres;
     $scope.groupe.description = $scope.description;
     $scope.groupe.$save(function (groupe, headers) {
                     // succès
-
+          $location.path('/relations');
                 }, function (error) {
                     // échec
                 });
