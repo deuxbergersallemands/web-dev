@@ -10,3 +10,11 @@ body {
 	margin-bottom: 5px;
 	text-align: center;
 }
+
+.ajouterTransaction {
+	float: right;
+}
+
+.solde {
+	float: left;
+}

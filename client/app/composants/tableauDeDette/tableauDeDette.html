@@ -2,14 +2,20 @@
   <h1>
   	Transactions en Cours 
   </h1>
-  <h4> Votre solde: {{solde}}</h4>
+  <div>
+    <div class="col-md-12">
+      <h4 class='solde'> Vous devez: {{solde}}</h4>
 
-  <button class='btn btn-primary' ng-click="ajouterTransaction()"> Ajouter une Transaction </button>
-  <h3>
-      Vos dettes
-  </h3>
+      <button class='btn btn-primary ajouterTransaction' ng-click="ajouterTransaction()"> 
+        Ajouter une Transaction 
+      </button>
+    </div>
+  <div>
   <div class="col-md-6">
-   <div class='transaction' ng-repeat="transaction in transactionsParticipant">
+    <h3>
+      Vos dettes
+    </h3>
+    <div class='transaction' ng-repeat="transaction in transactionsParticipant">
       <div ng-repeat="participant in transaction.participants" ng-if="participant.participant.mel == mel && participant.statut == 'Ouverte'"> 
        Vous devez {{participant.montantDu}} à {{transaction.preteur.mel}} pour {{transaction.description}}
        <button class='btn btn-primary'ng-click="dirigerVers(transaction._id)"> Régler  </button>
