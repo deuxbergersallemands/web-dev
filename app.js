@@ -176,7 +176,8 @@ MongoClient.connect(url, function(err, db) {
                    }
                 });
             });
-
+ 
+            // Régler une transaction
             app.post('/transaction',function(req,res){
                 var test = new require('mongodb').ObjectID(req.body.transId);
                  Transaction.findOne({'_id' : test}, function(err, transaction) {
@@ -203,28 +204,19 @@ MongoClient.connect(url, function(err, db) {
                         })
                       }
                      }
-                     console.log("icicicici");
                      db.collection("Utilisateur", function(err, Utilisateur) {
                       Utilisateur.findOne({"mel": req.cookies.utilisateur}, function(err, utilisateur){
                          if (err) {
-                          console.log("NE MARCHE PASSSSS");
                           res.send(err);
                          }
                          else {
-                           console.log("Utlisateur trouvé: " + utilisateur.mel + " " + utilisateur.solde );
-                           console.log("unDu: " + unDu);
-                           var unMontant = utilisateur.solde;
-                           console.log(unMontant + " est le solde actuel")
-
-                            var soldeNouveau = unMontant + unDu;
-                               console.log(unMontant + unDu + " est le solde on veut metter")
-                          Utilisateur.update({"mel": req.cookies.utilisateur}, {
-                          $set: {"solde": soldeNouveau}
+                           var soldeNouveau = utilisateur.solde + unDu;
+                           Utilisateur.update({"mel": req.cookies.utilisateur}, {
+                           $set: {"solde": soldeNouveau}
                         })
                          }
                       });
                      })
-
                     res.send();
                     //res.send(transaction);
                    }
@@ -262,11 +254,33 @@ MongoClient.connect(url, function(err, db) {
             Concernes=req.body.participants;
             message+= req.cookies.nom;
             saveHistaurique(message,Concernes,data); 
+             
+            for (var i = 0; i < req.body.participants.length; i++) {
+              if (req.body.participants[i].participant.mel != req.body.preteur.mel) {
+                    var unDu = req.body.participants[i].montantDu;
+                    var melUtil = req.body.participants[i].participant.mel;
+                     db.collection("Utilisateur", function(err, Utilisateur) {
+                      Utilisateur.findOne({"mel": melUtil}, function(err, utilisateur){
+                         if (err) {
+                          res.send(err);
+                         }
+                         else {
+                           var soldeNouveau = utilisateur.solde - unDu;
+                           Utilisateur.update({"mel": melUtil}, {
+                           $set: {"solde": soldeNouveau}
+                        });
+
+                       Transaction.insert(req.body);
+                       res.send();
+
+                         }
+                      });
+                    });
 
 
-            Transaction.insert(req.body);
-            res.send();
-
+               
+              }
+            }
         });
 
 
