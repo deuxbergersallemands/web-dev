@@ -38,8 +38,12 @@ myApp.controller('TransactionNouvelleControleur', ['$scope', '$route', '$routePa
     
     // Mettre à jour le montant à payer
     for (var i = 0; i < $scope.participants.length; i++) {
-      if($scope.transaction.participants[i].mel != $cookies.get('utilisateur')) {
+
+      if($scope.transaction.participants[i].participant.mel !=  $scope.transaction.preteur.mel) {
         $scope.transaction.participants[i].montantDu = aPayer;
+      }
+      else {
+        $scope.transaction.participants[i].montantDu = 0;
       }
     }
     $scope.transaction.$save(function (transaction, headers) {
