@@ -109,7 +109,7 @@ MongoClient.connect(url, function(err, db) {
                           else {
                             var objHistorique= new Object();
                             objHistorique.Concernes=({nom: ami.nom, mel: ami.mel});
-                            var message="ajout d'un ami pour l'utilisateur  ";
+                            var message= req.cookies.utilisateur + " a ajouté " + ami.mel;
                             var Concernes=new Array();
                             var concerne=new Object();
                             var data=new Object();
@@ -156,8 +156,6 @@ MongoClient.connect(url, function(err, db) {
               var u=Utilisateur.findOne({'mel':req.cookies.utilisateur}, {'solde':1, 'nom': 1}, function(err, solde) {
                 if (err)  res.send(err);
                 else {
-                    console.log("Solde à retourner: " + solde);
-
                     res.send(solde);
                 }
               });
@@ -190,7 +188,7 @@ MongoClient.connect(url, function(err, db) {
                      {
                       if (obj[i].participant.mel == utilisateur) {
 
-                            var message="modification de transaction  ";
+                            var message= req.cookies.utilisateur + " a réglé une transaction.";
                             var Concernes=new Array();
                             var concerne=new Object();
                             var data=new Object();
@@ -247,12 +245,11 @@ MongoClient.connect(url, function(err, db) {
     
         app.post('/transaction/nouvelle', function(req, res) { 
 
-            var message="ajout de transaction ";
+            var message= req.cookies.nom + " a ajouté une transaction ";
             var Concernes=new Object();
             var data = new Object();
             data =req.body;
             Concernes=req.body.participants;
-            message+= req.cookies.nom;
             saveHistaurique(message,Concernes,data); 
              
             for (var i = 0; i < req.body.participants.length; i++) {
@@ -338,7 +335,7 @@ MongoClient.connect(url, function(err, db) {
             if (err) res.send(err);
             if(req!=null){
                 //Concernes ----> Concernes.mel si votre objet personne et pas seulement l'email 
-                Historique.find({'Concernes.participant.mel' : req.cookies.utilisateur}).limit(10).toArray( function(err, x) {
+                Historique.find({'Concernes.participant.mel' : req.cookies.utilisateur}).sort({_id:-1}).limit(10).toArray( function(err, x) {
                     if(err==null){
                     res.send(x);
                     }
@@ -349,7 +346,7 @@ MongoClient.connect(url, function(err, db) {
         });
     app.get('/historique',function(req,res){
             if(req!=null){
-                Historique.find({'Concernes.participant.mel' : req.cookies.utilisateur}).toArray( function(err, x) {
+                Historique.find({'Concernes.participant.mel' : req.cookies.utilisateur}).sort({_id:-1}).toArray( function(err, x) {
                     if(err==null){
                     res.send(x);
                     }
