@@ -19,7 +19,7 @@ myApp.controller('TransactionIdControleur', ['$scope', '$route', '$routeParams',
   $scope.payer = function() {
     var trans = new TransactionId();
     trans.transId = $scope.tid;
-
+     $location.path('/tableauDeBord');
      trans.$save({function (transaction, headers) {
           console.log("post-save")
           $location.path('/tableauDeBord');
