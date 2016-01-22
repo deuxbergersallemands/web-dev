@@ -5,8 +5,8 @@
 
     <div  class="col-md-6" >
     	Nom : <input class='form-control' name="inputAmi" ng-model="nomUtilisateur" placeholder="Saisir nouvel ami" required="obligatoire">
-    	<div ng-show="nomUtilisateur.length > 2">
-	      <ng-form id="nameT" ng-repeat="utilisateur in utilisateurs | filter: nomUtilisateur">
+    	<div ng-show="nomUtilisateur.length > 1">
+	      <ng-form class='amisTrans' id="nameT" ng-repeat="utilisateur in utilisateurs | filter: nomUtilisateur">
 	  			<p> {{utilisateur.nom}} : {{utilisateur.mel}}</p> 
 	  			<button type="submit" class= "btn btn-primary" ng-click="ajouterAmi(utilisateur._id)">+</button>
 	  	  </ng-form>

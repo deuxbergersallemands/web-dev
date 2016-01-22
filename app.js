@@ -212,11 +212,10 @@ MongoClient.connect(url, function(err, db) {
                            Utilisateur.update({"mel": req.cookies.utilisateur}, {
                            $set: {"solde": soldeNouveau}
                         })
+                           res.send();
                          }
                       });
                      })
-                    res.send();
-                    //res.send(transaction);
                    }
                 });
             });
